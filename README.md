@@ -246,8 +246,17 @@ El proyecto se considerará bien encaminado cuando tengamos:
 - prompts reutilizables para Codex y para sprints futuros,
 - y un sistema que trabaje para el usuario sin comprometer el VPS.
 
-## 12. Próximo paso recomendado
+## 12. Estado documental actual
 
-Sembrar este repositorio con los documentos base y abrir el Sprint 1 con un enfoque realista:
+Sprint 1 queda cerrado documentalmente como sprint de auditoría, consolidación y gobierno técnico del boundary ya existente.
 
-**no instalar desde cero, sino consolidar y endurecer el runtime actual de DAVLOS para convertirlo en la base del Obsi-Claw definitivo.**
+Documentos clave:
+
+- [docs/sprints/SPRINT_1_CIERRE.md](docs/sprints/SPRINT_1_CIERRE.md)
+- [docs/ESTADO_SEMAFORICO.md](docs/ESTADO_SEMAFORICO.md)
+- [docs/sprints/SPRINT_2_BORRADOR.md](docs/sprints/SPRINT_2_BORRADOR.md)
+- [RESUMEN_SPRINT_1.md](RESUMEN_SPRINT_1.md)
+
+## 13. Próximo paso recomendado
+
+Abrir Sprint 2 con foco principal en el hardening real, pequeño y reversible, de `egress/allowlist`, manteniendo Obsidian en modo diseño prudente y Telegram como track secundario de validación.
