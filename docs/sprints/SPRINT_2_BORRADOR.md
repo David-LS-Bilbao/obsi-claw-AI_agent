@@ -1,73 +1,75 @@
 # SPRINT_2_BORRADOR.md
 
+## Título
+Sprint 2 — Hardening real de egress / allowlist del boundary OpenClaw
+
 ## Estado
 
-Borrador de arranque. No autoriza cambios por sí solo.
+Cerrado. Este documento se conserva como plan base del sprint.
 
-## Objetivo propuesto del Sprint 2
+Para el cierre formal y el juicio cronológico adoptado, ver `docs/sprints/SPRINT_2_CIERRE.md`.
 
-Ejecutar el hardening real y reversible de `egress/allowlist` del boundary OpenClaw, partiendo de la auditoría ya hecha en Sprint 1 y sin perder la baseline operativa confirmada.
+## Propósito
 
-## Alcance recomendado
+Cerrar el principal gap rojo heredado de Sprint 1:
 
-- inventariar con precisión los destinos, puertos y protocolos que OpenClaw necesita realmente;
-- traducir ese inventario a un diseño de `deny-by-default` con allowlist explícita;
-- preparar runbook con prechecks, backup, rollback y validación;
-- validar en host, con cambios mínimos y reversibles, la política efectiva de `egress/allowlist`;
-- usar Telegram solo como pista secundaria de salud operativa, no como foco principal.
+- ausencia de allowlist real de salida;
+- ausencia de deny-by-default efectivo para `agents_net`.
 
-## Exclusiones
+## Contexto consolidado
 
-- sync bidireccional con Obsidian;
-- reescritura de notas núcleo del usuario;
-- cambios amplios en `n8n`, NPM, WireGuard, PostgreSQL o servicios ajenos;
-- replatforming amplio del contenedor OpenClaw;
-- incorporación de proveedores externos o credenciales nuevas sin necesidad explícita.
+- Sprint 1 ya está cerrado.
+- El boundary OpenClaw ya existe como baseline real.
+- La nueva decisión de arquitectura del proyecto fija:
+  - vault canónico en VPS;
+  - Syncthing como solución prevista de sincronización;
+  - OpenClaw separado del vault.
 
-## Prerequisitos
+## Objetivo principal
 
-- cierre documental de Sprint 1 disponible en `docs/sprints/SPRINT_1_CIERRE.md`;
-- baseline semafórica disponible en `docs/ESTADO_SEMAFORICO.md`;
-- evidencia host-side previa disponible y vigente;
-- inventario de destinos permitidos revisado antes de tocar reglas;
-- plan de rollback claro antes de cualquier cambio host-side;
-- ventana operativa prudente si se llegara a actuar sobre firewall o forwarding real.
+Diseñar y, si la evidencia y la ventana operativa lo permiten, dejar listo o ejecutar un endurecimiento pequeño, reversible y seguro de `egress/allowlist` para `agents_net`.
 
-## Backlog candidato priorizado
+## Lo que este sprint NO debe hacer
 
-### MUST
+- no instalar Syncthing;
+- no crear todavía el vault canónico;
+- no mezclar la allowlist del boundary con la sincronización futura del vault;
+- no abrir puertos o superficie adicional para móvil/escritorio;
+- no activar integración operativa de Obsidian.
 
-- fijar la matriz real de destinos permitidos para `openclaw-gateway`;
-- definir la política mínima de `deny-by-default` para `agents_net`;
-- preparar runbook reversible de aplicación y rollback;
-- validar que la ruta aprobada a `172.22.0.1:11440` siga operativa tras el diseño propuesto;
-- dejar explícito qué destinos no deben seguir accesibles.
+## MUST
 
-### SHOULD
+- auditar la salida real del boundary;
+- inventariar destinos necesarios;
+- diseñar deny-by-default;
+- definir backup, rollback y validación;
+- ejecutar solo cambios pequeños, auditables y reversibles.
 
-- revisar la salud funcional real de Telegram;
-- consolidar contrato final de health/readiness del boundary;
-- revisar si `11434` debe seguir visible para `agents_net` o solo `11440` debería quedar permitido;
-- documentar cleanup recomendado pendiente en `davlos-control-plane`.
+## SHOULD
 
-### COULD
+- revisar Telegram persistente;
+- consolidar health/readiness;
+- anotar requisitos futuros que Syncthing impondrá, sin activarlos.
 
-- endurecer deuda menor del contenedor como `ReadonlyRootfs` solo si no rompe la baseline y existe rollback;
-- preparar el siguiente tramo documental de integración prudente con Obsidian.
+## Entregables
 
-### WON'T
+- plan de cambio de egress;
+- runbook tecnico de cambio;
+- checklist de prechecks, validacion y rollback;
+- evidencia pre y post;
+- cierre formal del sprint;
+- resumen de relevo.
 
-- automatización agresiva sobre la vault;
-- sync bidireccional;
-- cambios grandes no reversibles;
-- ampliación prematura de superficie operativa del boundary.
+Artefactos previstos en repo:
 
-## Cambio mínimo y reversible recomendado para abrir Sprint 2
+- `docs/runbooks/OPENCLAW_EGRESS_ALLOWLIST_SPRINT_2.md`
+- `docs/checklists/OPENCLAW_EGRESS_CHANGE_CHECKLIST_SPRINT_2.md`
 
-Preparar un cambio host-side pequeño y reversible que convierta `agents_net` en `deny-by-default` a nivel de egress mediante una capa explícita de control en `DOCKER-USER` o equivalente, manteniendo inicialmente solo:
+## Criterio de cierre
 
-- tráfico `ESTABLISHED,RELATED`;
-- destino aprobado `172.22.0.1:11440/tcp`;
-- cualquier destino adicional solo si queda demostrado como estrictamente necesario por evidencia previa.
+Sprint 2 se considerará correctamente cerrado si:
 
-Este documento no autoriza ni ejecuta ese cambio. Solo fija el arranque recomendado del sprint.
+- el gap de egress queda reducido materialmente o cerrado;
+- el boundary sigue operativo;
+- la nueva arquitectura de vault + Syncthing no introduce ruido en este sprint;
+- la documentación separa claramente hardening actual y sincronización futura.

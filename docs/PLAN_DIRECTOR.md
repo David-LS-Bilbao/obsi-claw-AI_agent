@@ -1,36 +1,154 @@
 # PLAN_DIRECTOR.md
 
-## Propósito
+## Misión del proyecto
 
-Definir el marco de producto y documentación viva de Obsi-Claw AI Agent como capa separada del estado operativo del VPS.
+Construir Obsi-Claw como una plataforma híbrida compuesta por:
 
-## Relación entre repositorios
+- un **Segundo Cerebro persistente** basado en Obsidian y Markdown;
+- un **operador técnico semiautónomo** basado en OpenClaw;
+- un **boundary de seguridad** en DAVLOS que permita automatización sin ampliar superficie innecesaria.
 
-- `obsi-claw-AI_agent`: producto, arquitectura, roadmap, prompts, runbooks y diseño del Second Brain.
-- `davlos-control-plane`: referencia operativa del VPS DAVLOS y checkpoint documental del boundary ya desplegado.
+## Fuentes de verdad
 
-## Regla de precedencia documental
+### Fuente de verdad operativa
+- `davlos-control-plane`
 
-1. Evidencia verificable del host y del runtime.
-2. `davlos-control-plane` para la verdad operativa documentada.
-3. `obsi-claw-AI_agent` para diseño, planificación y consolidación futura.
+### Fuente de verdad de producto y evolución documental
+- `obsi-claw-AI_agent`
 
-## Objetivo revisado del Sprint 1
+## Principios rectores
 
-Auditar y consolidar el boundary de OpenClaw ya existente, cerrar divergencias documentales y preparar la integración inicial segura con Obsidian, sin reinstalar OpenClaw desde cero ni tocar producción en este paso.
+1. Seguridad por defecto.
+2. Evidencia antes que documentación histórica.
+3. Cambios pequeños, reversibles y auditables.
+4. Markdown-first.
+5. Git-first.
+6. Human-in-the-loop para acciones de impacto.
+7. Nada de mezclar runtime del agente y conocimiento del usuario sin política explícita.
 
-## Carriles del proyecto
+## Decisión de arquitectura vigente
 
-- Carril operativo: contrastar documentación con el checkpoint real del VPS.
-- Carril documental: sembrar estructura mínima, estado global y riesgos.
-- Carril de diseño: preparar vault, prompts y runbooks sin asumir ownership de escritura todavía.
+### Vault canónico
+El vault maestro de Obsidian vivirá en el VPS DAVLOS.
 
-## Divergencias documentales abiertas
+Ruta objetivo recomendada:
 
-- `davlos-control-plane` presenta un checkpoint operativo avanzado del boundary OpenClaw.
-- `obsi-claw-AI_agent` sigue en fase semilla y todavía no refleja esa madurez en su estructura.
-- Cualquier implementación futura debe contrastarse contra el estado real del VPS antes de ejecutarse.
+- `/opt/data/obsidian/vault-main`
 
-## Siguiente paso
+### Runtime del agente
+OpenClaw sigue separado del vault:
 
-Realizar auditoría host-side guiada por evidencia y actualizar este plan con hallazgos confirmados.
+- `/opt/automation/agents/openclaw`
+- `/etc/davlos/secrets/openclaw`
+
+### Sincronización
+No se usará Obsidian Sync de pago como solución base.
+
+La solución prevista es:
+
+- **Syncthing**
+- clientes con copia local del vault
+- VPS como nodo canónico
+- nada de abrir el vault remoto live desde móvil o escritorio
+
+### Escritura del agente
+OpenClaw no escribirá libremente sobre todo el vault.
+Las zonas iniciales de escritura permitida serán controladas, por ejemplo:
+
+- `Inbox_Agent/`
+- `Drafts_Agent/`
+- `Reports_Agent/`
+- `Heartbeat/`
+
+La promoción a notas núcleo del usuario requerirá HITL.
+
+## Estado de partida real
+
+No partimos desde cero:
+
+- el boundary OpenClaw ya existe en DAVLOS;
+- hay baseline real confirmada;
+- helper readonly y broker core están validados;
+- `egress/allowlist` ya queda cerrado técnicamente en Sprint 2;
+- Telegram queda en ámbar;
+- Obsidian sigue todavía en modo diseño prudente.
+
+## Roadmap director
+
+### Sprint 1 — Auditoría, baseline y gobierno técnico
+**Estado:** cerrado
+
+Objetivo real ejecutado:
+- auditar lo ya desplegado,
+- consolidar baseline,
+- clasificar riesgos,
+- preparar Sprint 2.
+
+### Sprint 2 — Hardening real de egress / allowlist
+**Estado:** cerrado
+
+Objetivo:
+- cerrar el principal gap rojo del boundary,
+- aplicar o dejar listo un deny-by-default real para `agents_net`,
+- mantener cambios pequeños y reversibles.
+
+No incluye:
+- instalación de Syncthing,
+- activación del vault canónico,
+- integración operativa de Obsidian.
+
+Resultado real ejecutado:
+- `egress/allowlist` queda `VERDE`;
+- allow efectivo a `172.22.0.1:11440/tcp`;
+- bloqueo efectivo probado de `1.1.1.1:443/tcp`;
+- el juicio cronológico adoptado es de validación/reaplicación idempotente en la última ventana revisada.
+
+### Sprint 3 — Vault canónico en VPS + Syncthing + política de ownership
+**Estado:** siguiente sprint
+
+Objetivo:
+- fijar arquitectura del vault;
+- definir layout del conocimiento;
+- definir política de conflictos;
+- definir exclusiones;
+- diseñar y preparar la instalación de Syncthing;
+- preparar backups del vault.
+
+### Sprint 4 — Integración controlada OpenClaw ↔ Vault + heartbeats
+Objetivo:
+- habilitar zonas controladas de escritura del agente;
+- activar primeros heartbeats útiles;
+- validar que el agente no corrompe el vault;
+- introducir promoción con HITL.
+
+### Sprint 5 — Operador técnico semiautónomo
+Objetivo:
+- skills internas del proyecto;
+- prompts operativos;
+- automatizaciones útiles;
+- salidas valiosas para Obsidian.
+
+### Sprint 6 — Estabilización y operación continua
+Objetivo:
+- observabilidad;
+- backups y recuperación;
+- deuda técnica;
+- documentación final;
+- continuidad entre chats y sprints.
+
+## Reglas de ejecución
+
+- primero auditar;
+- después documentar;
+- luego proponer;
+- y solo al final ejecutar.
+
+## Criterio de éxito
+
+El proyecto avanzará correctamente si logra:
+
+- boundary endurecido y mantenible;
+- vault canónico bien gobernado;
+- sincronización segura con dispositivos;
+- OpenClaw útil pero contenido;
+- trazabilidad documental suficiente para continuidad.

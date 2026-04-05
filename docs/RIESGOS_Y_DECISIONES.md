@@ -1,23 +1,104 @@
 # RIESGOS_Y_DECISIONES.md
 
-| Riesgo | Impacto | Mitigación | Decisión actual |
-| --- | --- | --- | --- |
-| Divergencia entre roadmap del repo nuevo y checkpoint operativo de `davlos-control-plane` | Planificación incorrecta del Sprint 1 | Priorizar evidencia y contraste host-side antes de proponer cambios técnicos | Sprint 1 queda cerrado como auditoría y consolidación del boundary existente; Sprint 2 asume el hardening pendiente |
-| Ausencia inicial de estructura documental mínima en `obsi-claw-AI_agent` | Baja continuidad entre chats y agentes | Sembrar baseline documental pequeño y canónico | Ejecutado en este paso |
-| Falta de verificación host-side del runtime OpenClaw | Riesgo de documentar sobre supuestos | Marcar todo hueco como `pendiente de verificación en host` | Se mantiene restricción explícita |
-| Reutilizar árboles locales mezclados con runtime o trabajo previo | Confusión operativa y riesgo de tocar rutas sensibles | Separar workspace en `/opt/automation/projects` y tratar `/opt/control-plane` como solo lectura | Ejecutado en este paso |
-| Definir integración Obsidian sin política de ownership y conflictos | Corrupción o sincronización insegura de la vault | Limitarse a visión inicial y prohibir sync bidireccional por ahora | Sprint 1 cierra con postura prudente: zonas controladas, HITL, sin sync bidireccional ni reescritura de notas núcleo |
-| `control-plane/docs/AGENTS.md` desalineado con la evidencia real reciente | Baseline operativo ambiguo y decisiones erróneas | Fijar precedencia documental y registrar la desalineación | Riesgo aceptado temporalmente: `README` reciente + evidencia de host se tratan como baseline más fiable mientras no se limpie `control-plane` |
-| Broker restringido sin ejercicio funcional propio | Falsa sensación de operatividad cerrada | Ejecutar una única verificación readonly sobre una acción explícitamente no mutante | Gap resuelto: el broker core queda `VERDE` tras ejecutar `action.health.general.v1` con evidencia before/after |
-| Telegram activo con warnings de polling/timeout | Canal corto degradado sin visibilidad suficiente | Clasificar Telegram como ámbar y revisar salud funcional en paso posterior | Riesgo aceptado temporalmente: Telegram no bloquea el cierre de Sprint 1 y pasa a Sprint 2 como track secundario |
-| Helper readonly instalado pero no revalidado | Menor confianza en la vía segura de observabilidad | Validar helper con subcomandos readonly y evidencia capturada | Resuelto: helper `VALIDADO READONLY` y vía preferente de observabilidad |
-| No se observa un canal no-Telegram autenticado del broker desplegado en host | Riesgo de asumir una superficie operativa que hoy no está confirmada | Tratar el broker core como verde, pero cualquier canal alternativo como `pendiente de verificación en host` | No bloquea Sprint 1; queda fuera del cierre actual del broker core |
-| Egress/allowlist final no cerrada | Riesgo residual de superficie no normalizada | Mantener gap explícito, usar la auditoría host-side como baseline y diferir el hardening real a Sprint 2 | Riesgo principal transferido a Sprint 2: hay ruta aprobada a `11434/11440`, pero no allowlist real ni `deny-by-default` efectivo |
+## Registro de decisiones
 
-## Divergencias documentales abiertas
+### DEC-001 — El boundary OpenClaw actual se trata como baseline real
+**Estado:** aceptada
 
-- `davlos-control-plane` documenta un boundary OpenClaw ya operativo y con componentes auxiliares activos.
-- `obsi-claw-AI_agent` no partía de cero conceptualmente, pero sí partía de una base documental mínima insuficiente.
-- `control-plane/README.md` y la evidencia de host confirman un checkpoint avanzado del boundary.
-- `control-plane/docs/AGENTS.md` conserva cautelas históricas que ya no describen broker y Telegram.
-- Toda implementación futura debe validarse contra el estado real del VPS antes de tocar runtime o servicios.
+Se asume que OpenClaw ya está desplegado en DAVLOS y que Sprint 2 no parte de una instalación desde cero.
+
+### DEC-002 — El gap principal previo a Obsidian es egress / allowlist
+**Estado:** aceptada
+
+Antes de activar sincronización o integración operativa con el vault, debe reducirse el riesgo de salida libre del boundary.
+
+### DEC-003 — No se usará Obsidian Sync de pago como solución base
+**Estado:** aceptada
+
+El proyecto usará una solución autogestionada basada en sincronización de archivos.
+
+### DEC-004 — El vault canónico vivirá en el VPS DAVLOS
+**Estado:** aceptada
+
+Ruta objetivo recomendada:
+
+- `/opt/data/obsidian/vault-main`
+
+### DEC-005 — La sincronización prevista será mediante Syncthing
+**Estado:** aceptada
+
+El modelo será:
+
+- VPS como nodo canónico,
+- clientes con copia local,
+- sincronización de archivos,
+- nada de abrir el vault remoto en vivo.
+
+### DEC-006 — OpenClaw no escribirá libremente sobre toda la bóveda
+**Estado:** aceptada
+
+Las primeras zonas de escritura del agente serán controladas y acotadas.
+
+### DEC-007 — El cierre de egress en Sprint 2 se documenta sin inventar una primera activación no demostrable
+**Estado:** aceptada
+
+El gap `egress/allowlist` queda `VERDE` en Sprint 2, pero la última ventana revisada se documenta como validación/reaplicación idempotente porque los snapshots previos del propio script muestran estado ya activo antes del `apply` final.
+
+## Riesgos del proyecto
+
+### RISK-001 — Egress / allowlist del boundary
+**Estado:** verde
+**Tratamiento:** cerrado en Sprint 2
+
+Confirmado por:
+- `scripts/hardening/openclaw_egress_allowlist.sh` ya pasa `plan`, `apply` y `verify`;
+- allow efectivo a `172.22.0.1:11440/tcp`;
+- bloqueo efectivo probado de `1.1.1.1:443/tcp`;
+- juicio cronológico adoptado: la última ventana validó/reaplicó un estado que ya aparecía activo antes del `apply` final.
+
+### RISK-002 — Conflictos de sincronización del vault
+**Estado:** ámbar
+**Tratamiento:** Sprint 3
+
+Riesgo:
+- cambios concurrentes entre cliente y VPS;
+- promoción accidental de borradores del agente;
+- confusión entre notas humanas y notas generadas.
+
+Mitigación prevista:
+- ownership explícito;
+- carpetas separadas;
+- HITL;
+- backups.
+
+### RISK-003 — Mezcla entre runtime del agente y vault
+**Estado:** ámbar
+**Tratamiento:** Sprint 3
+
+Mitigación:
+- rutas separadas;
+- runbooks separados;
+- nada de usar el workspace del agente como vault.
+
+### RISK-004 — Móvil iOS con más fricción operativa
+**Estado:** ámbar
+**Tratamiento:** Sprint 3
+
+Mitigación:
+- priorizar escritorio y Android;
+- documentar alternativa específica para iOS si realmente se necesita.
+
+### RISK-005 — Documentación desalineada entre repos
+**Estado:** ámbar
+**Tratamiento:** continuo
+
+Mitigación:
+- precedencia documental clara;
+- actualización de docs vivas al cierre de cada sprint.
+
+## No decisiones todavía cerradas
+
+- ruta final exacta del vault si se separa `vault-main` y `vault-agent-zone`;
+- exclusiones concretas de Syncthing;
+- estrategia final de backup incremental del vault;
+- tratamiento específico de iOS.

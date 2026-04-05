@@ -21,7 +21,7 @@ La evidencia de host confirma que el boundary OpenClaw está más avanzado de lo
 - `control-plane/docs/AGENTS.md` sigue indicando que broker restringido e integración Telegram no deben darse por implementados.
 - La idea de que `/etc/davlos/secrets/openclaw` queda solo “reservado” ya no es suficiente: hoy contiene secreto Telegram.
 - La expresión “health correcto en `127.0.0.1:18789`” es ambigua si no se aclara que el check real observado es TCP, no un `/healthz` HTTP del gateway.
-- El hardening final de egress/allowlist no debe leerse como cerrado.
+- Los documentos que dejan `egress/allowlist` como gap abierto deben leerse como evidencia pre-Sprint 2 o como material histórico; en este repo el gap ya queda cerrado con juicio cronológico prudente.
 
 ## Decisión recomendada de precedencia documental
 
@@ -37,12 +37,12 @@ Solo recomendados, no ejecutar en este paso:
 - actualizar `docs/AGENTS.md` para retirar la idea de que broker y Telegram no están implementados;
 - aclarar que el healthcheck de `18789` es TCP y no readiness HTTP estable;
 - actualizar el contrato de secretos para reflejar el uso actual de `telegram-bot.env`;
-- dejar la allowlist/egress como gap abierto con fecha de última verificación;
+- reconciliar la cronología del cierre de egress: no vender la última ventana como primera activación si no está demostrada, pero tampoco dejar el gap como abierto en presente;
 - añadir una nota corta de “documento histórico parcialmente superado” donde proceda.
 
 ## Cambios recomendados en obsi-claw-AI_agent
 
 - tomar la auditoría host-side como baseline operativo de Sprint 1;
-- mantener el semáforo verde/ámbar/rojo explícito en `ESTADO_GLOBAL.md` y `SPRINT_1.md`;
+- reflejar el cierre de Sprint 2 en `ESTADO_GLOBAL.md`, `ESTADO_SEMAFORICO.md` y documentos de relevo;
 - usar `docs/evidence/` como registro canónico de verificaciones de host;
 - mantener una postura prudente para Obsidian: diseño sí, sync/automatización no todavía.

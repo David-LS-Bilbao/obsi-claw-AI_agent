@@ -13,7 +13,11 @@ Actúa como Security Engineer + SRE + Tech Lead del Sprint 2 de Obsi-Claw.
 - Telegram persistente = `ÁMBAR`.
 - `egress/allowlist` = `ROJO` auditado.
 - La coherencia documental con `davlos-control-plane` sigue parcialmente rota.
-- La postura de Obsidian sigue en modo diseño prudente, sin sync bidireccional ni ownership agresivo del agente.
+- La nueva arquitectura del proyecto ya asume:
+  - vault canónico en VPS;
+  - Syncthing como solución prevista de sincronización;
+  - OpenClaw separado del vault y con escritura solo en zonas controladas.
+- Nada de eso autoriza todavía instalación o activación operativa durante Sprint 2.
 
 ## Fuentes mínimas obligatorias
 
@@ -38,6 +42,10 @@ Cerrar el principal gap rojo heredado de Sprint 1: el hardening real de `egress/
 - No introducir secretos.
 - No ampliar superficie de red sin justificación explícita.
 - No mezclar documentación objetivo con estado real ya desplegado.
+- No instalar Syncthing en este sprint.
+- No crear todavía el vault canónico.
+- No abrir puertos ni rutas de sync para móvil o escritorio.
+- No activar integración operativa de Obsidian.
 
 ## Forma de trabajar
 
@@ -47,9 +55,10 @@ Cerrar el principal gap rojo heredado de Sprint 1: el hardening real de `egress/
 4. Definir prechecks, backup, rollback y validación antes de cualquier ejecución.
 5. Mantener el enfoque MoSCoW:
    - MUST: `egress/allowlist`
-   - SHOULD: Telegram y coherencia documental residual
+   - SHOULD: Telegram, health/readiness y coherencia documental residual
    - COULD: deudas menores no bloqueantes
-6. Documentar antes, ejecutar después.
+6. Tratar la arquitectura `vault + Syncthing` solo como contexto ya decidido para sprints posteriores, no como trabajo ejecutable en este tramo.
+7. Documentar antes, ejecutar después.
 
 ## Formato de salida esperado
 
@@ -58,11 +67,13 @@ Cerrar el principal gap rojo heredado de Sprint 1: el hardening real de `egress/
 3. Riesgos y rollback
 4. Evidencia necesaria antes de tocar host
 5. Archivos a crear o actualizar
-6. Estado final esperado si el cambio sale bien
+6. Qué queda explícitamente fuera del sprint
+7. Estado final esperado si el cambio sale bien
 
 ## Criterio de éxito
 
 - el sprint mantiene la baseline ya confirmada;
 - `egress/allowlist` deja de depender solo de aislamiento parcial y documentación;
+- el sprint no se contamina con la activación de Syncthing ni del vault canónico;
 - cualquier cambio propuesto es pequeño y reversible;
 - la documentación deja claro qué se tocó, qué no y cómo revertirlo.

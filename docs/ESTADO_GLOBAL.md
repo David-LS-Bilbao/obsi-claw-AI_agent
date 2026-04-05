@@ -13,7 +13,7 @@
 - La auditoría host-side readonly confirma broker, Telegram y helper readonly materializados por evidencia directa de host, con distintos niveles de confianza funcional.
 - La validación funcional controlada del helper `davlos-openclaw-readonly` confirma interfaz usable, subcomandos readonly operativos y cableado funcional por la vía `devops -> sudo` al menos para `runtime_summary`.
 - La prueba funcional readonly del broker core confirma ejecución real de `action.health.general.v1` fuera de Telegram, con auditoría before/after coherente y sin cambios de estado efectivo.
-- La auditoría readonly de `egress/allowlist` confirma `UFW` activo, reglas específicas desde `agents_net` hacia `172.22.0.1:11434/11440`, `DOCKER-USER` vacía y `MASQUERADE` para `172.22.0.0/16`, por lo que no existe todavía una allowlist real de salida.
+- Sprint 2 cerró técnicamente `egress/allowlist` con evidencia suficiente: hoy existe `DOCKER-USER -> OPENCLAW-EGRESS`, allow efectivo a `172.22.0.1:11440/tcp`, `DROP` final y bloqueo funcional probado de `1.1.1.1:443/tcp`.
 
 ## Semáforo actual del boundary
 
@@ -24,6 +24,7 @@
 - bind local del gateway;
 - `inference-gateway.service`;
 - hardening base del contenedor.
+- `egress/allowlist` cerrado técnicamente en Sprint 2.
 - helper readonly validado en modo readonly.
 - broker restringido validado en su core de ejecución readonly.
 
@@ -34,7 +35,6 @@
 
 ### Rojo
 
-- cierre real de egress/allowlist, ahora ya auditado como gap abierto y no como incógnita;
 - coherencia documental global entre fuentes de `control-plane`;
 - cualquier supuesto de integración operativa con Obsidian más allá del diseño.
 
@@ -44,13 +44,13 @@
 - Salud funcional real del canal Telegram, porque el servicio está activo pero el journal visible muestra warnings de polling.
 - Si se quisiera declarar operativo un canal no-Telegram autenticado del broker, eso queda `pendiente de verificación en host`.
 - Nivel de divergencia entre el árbol operativo real y los documentos del checkpoint.
-- Si se quisiera demostrar por prueba funcional reachability o bloqueo hacia destinos host-side adicionales o hacia Internet pública, eso queda `pendiente de verificación en host`; la auditoría actual caracteriza reglas efectivas, no hace probes externos.
+- Si se quisiera ampliar la allowlist o reabrir `11434/tcp`, eso queda `pendiente de verificación en host`.
 
 ## Qué no debe asumirse aún
 
 - Que toda la documentación histórica siga vigente sin contraste con el host.
-- Que el hardening final del boundary esté cerrado.
-- Que `agents_net` opere ya bajo `deny-by-default` solo por existir `UFW` activo o reglas puntuales hacia `11440`.
+- Que la cronología exacta de primera activación de la allowlist haya quedado demostrada al minuto.
+- Que el cierre de egress autorice por sí solo cambios de vault, Syncthing u Obsidian operativo.
 - Que exista ya un canal autenticado no-Telegram del broker desplegado y operativo.
 - Que el agente tenga ya permiso de escritura sobre una vault Obsidian productiva.
 - Que exista una política resuelta para sync bidireccional o resolución de conflictos.
