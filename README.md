@@ -138,13 +138,14 @@ Objetivo:
 - preparar integración segura con Obsidian,
 - definir la política de secretos y routing local.
 
-## Sprint 2 — Hardening del sandbox y egress
-Objetivo:
-- consolidar el contenedor,
-- limitar mounts,
-- aplicar deny-by-default,
-- preparar allowlist real,
-- reducir superficie y riesgo SSRF.
+## Sprint 2 — Hardening de egress / allowlist
+**Estado:** cerrado técnicamente
+
+Objetivo ejecutado:
+- cerrar el gap técnico de `egress/allowlist`;
+- validar un `deny-by-default` efectivo para `agents_net`;
+- mantener allow explícito a `172.22.0.1:11440/tcp`;
+- mantener fuera de alcance operativo a `vault canónico + Syncthing`.
 
 No incluye:
 - instalar Syncthing;
@@ -269,15 +270,17 @@ El proyecto se considerará bien encaminado cuando tengamos:
 
 ## 12. Estado documental actual
 
-Sprint 1 queda cerrado documentalmente como sprint de auditoría, consolidación y gobierno técnico del boundary ya existente.
+Sprint 1 y Sprint 2 quedan cerrados documentalmente.
 
 Documentos clave:
 
 - [docs/sprints/SPRINT_1_CIERRE.md](docs/sprints/SPRINT_1_CIERRE.md)
+- [docs/sprints/SPRINT_2_CIERRE.md](docs/sprints/SPRINT_2_CIERRE.md)
 - [docs/ESTADO_SEMAFORICO.md](docs/ESTADO_SEMAFORICO.md)
 - [docs/sprints/SPRINT_2_BORRADOR.md](docs/sprints/SPRINT_2_BORRADOR.md)
 - [RESUMEN_SPRINT_1.md](RESUMEN_SPRINT_1.md)
+- [RESUMEN_SPRINT_2.md](RESUMEN_SPRINT_2.md)
 
 ## 13. Próximo paso recomendado
 
-Abrir Sprint 2 con foco principal en el hardening real, pequeño y reversible, de `egress/allowlist`, manteniendo la nueva arquitectura `vault canónico + Syncthing` como contexto ya decidido pero todavía fuera de alcance operativo.
+Abrir Sprint 3 con foco en `vault canónico + Syncthing + ownership`, manteniendo ya cerrado el gap técnico de `egress/allowlist` y sin mezclar el trabajo futuro del vault con el hardening ya validado del boundary.

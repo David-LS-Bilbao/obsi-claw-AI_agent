@@ -3,6 +3,12 @@
 ## Título
 Sprint 2 — Hardening real de egress / allowlist del boundary OpenClaw
 
+## Estado
+
+Cerrado. Este documento se conserva como plan base del sprint.
+
+Para el cierre formal y el juicio cronológico adoptado, ver `docs/sprints/SPRINT_2_CIERRE.md`.
+
 ## Propósito
 
 Cerrar el principal gap rojo heredado de Sprint 1:

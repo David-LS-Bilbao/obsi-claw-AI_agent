@@ -25,7 +25,7 @@ El proyecto se ejecuta en seis sprints secuenciales, con dependencia fuerte entr
 ---
 
 ## Sprint 2 — Hardening real de egress / allowlist
-**Estado:** siguiente
+**Estado:** cerrado
 
 ### MUST
 - auditar egress actual real;
@@ -50,10 +50,16 @@ El proyecto se ejecuta en seis sprints secuenciales, con dependencia fuerte entr
 - evidencias pre y post;
 - cierre formal del gap rojo o reducción material del riesgo.
 
+### Resultado observado
+- `egress/allowlist` queda cerrado técnicamente;
+- `172.22.0.1:11440/tcp` sigue reachable desde `openclaw-gateway`;
+- `1.1.1.1:443/tcp` queda bloqueado en prueba negativa controlada;
+- la última ventana revisada no se toma como primera activación demostrable del hardening.
+
 ---
 
 ## Sprint 3 — Vault canónico en VPS + Syncthing + política de ownership
-**Estado:** pendiente
+**Estado:** siguiente
 
 ### MUST
 - decidir ruta canónica del vault en VPS;

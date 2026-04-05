@@ -39,11 +39,22 @@ El modelo será:
 
 Las primeras zonas de escritura del agente serán controladas y acotadas.
 
-## Riesgos abiertos
+### DEC-007 — El cierre de egress en Sprint 2 se documenta sin inventar una primera activación no demostrable
+**Estado:** aceptada
 
-### RISK-001 — Egress no endurecido del boundary
-**Estado:** rojo
-**Tratamiento:** Sprint 2
+El gap `egress/allowlist` queda `VERDE` en Sprint 2, pero la última ventana revisada se documenta como validación/reaplicación idempotente porque los snapshots previos del propio script muestran estado ya activo antes del `apply` final.
+
+## Riesgos del proyecto
+
+### RISK-001 — Egress / allowlist del boundary
+**Estado:** verde
+**Tratamiento:** cerrado en Sprint 2
+
+Confirmado por:
+- `scripts/hardening/openclaw_egress_allowlist.sh` ya pasa `plan`, `apply` y `verify`;
+- allow efectivo a `172.22.0.1:11440/tcp`;
+- bloqueo efectivo probado de `1.1.1.1:443/tcp`;
+- juicio cronológico adoptado: la última ventana validó/reaplicó un estado que ya aparecía activo antes del `apply` final.
 
 ### RISK-002 — Conflictos de sincronización del vault
 **Estado:** ámbar

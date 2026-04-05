@@ -69,7 +69,7 @@ No partimos desde cero:
 - el boundary OpenClaw ya existe en DAVLOS;
 - hay baseline real confirmada;
 - helper readonly y broker core están validados;
-- el gap principal sigue siendo `egress/allowlist`;
+- `egress/allowlist` ya queda cerrado técnicamente en Sprint 2;
 - Telegram queda en ámbar;
 - Obsidian sigue todavía en modo diseño prudente.
 
@@ -85,7 +85,7 @@ Objetivo real ejecutado:
 - preparar Sprint 2.
 
 ### Sprint 2 — Hardening real de egress / allowlist
-**Estado:** siguiente sprint
+**Estado:** cerrado
 
 Objetivo:
 - cerrar el principal gap rojo del boundary,
@@ -97,7 +97,15 @@ No incluye:
 - activación del vault canónico,
 - integración operativa de Obsidian.
 
+Resultado real ejecutado:
+- `egress/allowlist` queda `VERDE`;
+- allow efectivo a `172.22.0.1:11440/tcp`;
+- bloqueo efectivo probado de `1.1.1.1:443/tcp`;
+- el juicio cronológico adoptado es de validación/reaplicación idempotente en la última ventana revisada.
+
 ### Sprint 3 — Vault canónico en VPS + Syncthing + política de ownership
+**Estado:** siguiente sprint
+
 Objetivo:
 - fijar arquitectura del vault;
 - definir layout del conocimiento;

@@ -50,14 +50,26 @@ require_cmd() {
   command -v "$1" >/dev/null 2>&1 || fail "falta comando requerido: $1"
 }
 
+docker_network_inspect_field() {
+  local template output
+
+  template="$1"
+
+  if ! output="$(docker network inspect "${NETWORK_NAME}" --format "${template}" 2>&1)"; then
+    fail "docker network inspect ${NETWORK_NAME} fallo: ${output}"
+  fi
+
+  printf '%s' "${output}"
+}
+
 detect_network() {
   local actual_subnet actual_gateway
 
-  actual_subnet="$(docker network inspect "${NETWORK_NAME}" --format '{{range .IPAM.Config}}{{.Subnet}}{{end}}' 2>/dev/null || true)"
-  actual_gateway="$(docker network inspect "${NETWORK_NAME}" --format '{{range .IPAM.Config}}{{.Gateway}}{{end}}' 2>/dev/null || true)"
+  actual_subnet="$(docker_network_inspect_field '{{range .IPAM.Config}}{{.Subnet}}{{end}}')"
+  actual_gateway="$(docker_network_inspect_field '{{range .IPAM.Config}}{{.Gateway}}{{end}}')"
 
-  [[ -n "${actual_subnet}" ]] || fail "no se pudo resolver la subnet de ${NETWORK_NAME}"
-  [[ -n "${actual_gateway}" ]] || fail "no se pudo resolver el gateway de ${NETWORK_NAME}"
+  [[ -n "${actual_subnet}" ]] || fail "docker network inspect ${NETWORK_NAME} no devolvio subnet"
+  [[ -n "${actual_gateway}" ]] || fail "docker network inspect ${NETWORK_NAME} no devolvio gateway"
 
   if [[ "${actual_subnet}" != "${EXPECTED_AGENTS_SUBNET}" ]]; then
     fail "subnet inesperada para ${NETWORK_NAME}: ${actual_subnet} != ${EXPECTED_AGENTS_SUBNET}"
@@ -164,15 +176,15 @@ verify_rules() {
     || fail "falta el salto ${DOCKER_CHAIN} -> ${CHAIN_NAME}"
   [[ "${first_docker_rule}" == "-A ${DOCKER_CHAIN} -s ${AGENTS_SUBNET} -j ${CHAIN_NAME}" ]] \
     || fail "el salto ${DOCKER_CHAIN} -> ${CHAIN_NAME} no es la primera regla efectiva"
-  iptables -C "${CHAIN_NAME}" -m conntrack --ctstate ESTABLISHED,RELATED -j RETURN >/dev/null 2>&1 \
+  iptables -C "${CHAIN_NAME}" -m comment --comment "${COMMENT_TAG}" -m conntrack --ctstate ESTABLISHED,RELATED -j RETURN >/dev/null 2>&1 \
     || fail "falta la regla ESTABLISHED,RELATED en ${CHAIN_NAME}"
-  iptables -C "${CHAIN_NAME}" -d "${gateway_cidr}" -p tcp --dport "${ALLOWED_HOST_TCP_PORT}" -j RETURN >/dev/null 2>&1 \
+  iptables -C "${CHAIN_NAME}" -m comment --comment "${COMMENT_TAG}" -d "${gateway_cidr}" -p tcp --dport "${ALLOWED_HOST_TCP_PORT}" -j RETURN >/dev/null 2>&1 \
     || fail "falta la allowlist a ${gateway_cidr}:${ALLOWED_HOST_TCP_PORT}"
-  iptables -C "${CHAIN_NAME}" -j DROP >/dev/null 2>&1 \
+  iptables -C "${CHAIN_NAME}" -m comment --comment "${COMMENT_TAG}" -j DROP >/dev/null 2>&1 \
     || fail "falta la regla final DROP en ${CHAIN_NAME}"
 
   if [[ "${ALLOW_OLLAMA_DIRECT}" == "1" ]]; then
-    iptables -C "${CHAIN_NAME}" -d "${gateway_cidr}" -p tcp --dport "${OLLAMA_DIRECT_PORT}" -j RETURN >/dev/null 2>&1 \
+    iptables -C "${CHAIN_NAME}" -m comment --comment "${COMMENT_TAG}" -d "${gateway_cidr}" -p tcp --dport "${OLLAMA_DIRECT_PORT}" -j RETURN >/dev/null 2>&1 \
       || fail "falta la allowlist opcional a ${gateway_cidr}:${OLLAMA_DIRECT_PORT}"
   fi
 }
@@ -191,20 +203,24 @@ backup_prefix=${BACKUP_PREFIX:-not-created}
 EOF
 }
 
+print_commented_rule() {
+  printf '  -A %s -m comment --comment %q %s\n' "${CHAIN_NAME}" "${COMMENT_TAG}" "$1"
+}
+
 plan_mode() {
   prechecks_strict_apply
   print_runtime_summary
   echo
   echo "Reglas previstas:"
   echo "  -I ${DOCKER_CHAIN} 1 -s ${AGENTS_SUBNET} -j ${CHAIN_NAME}"
-  echo "  -A ${CHAIN_NAME} -m conntrack --ctstate ESTABLISHED,RELATED -j RETURN"
-  echo "  -A ${CHAIN_NAME} -d ${AGENTS_GATEWAY}/32 -p tcp --dport ${ALLOWED_HOST_TCP_PORT} -j RETURN"
+  print_commented_rule "-m conntrack --ctstate ESTABLISHED,RELATED -j RETURN"
+  print_commented_rule "-d ${AGENTS_GATEWAY}/32 -p tcp --dport ${ALLOWED_HOST_TCP_PORT} -j RETURN"
 
   if [[ "${ALLOW_OLLAMA_DIRECT}" == "1" ]]; then
-    echo "  -A ${CHAIN_NAME} -d ${AGENTS_GATEWAY}/32 -p tcp --dport ${OLLAMA_DIRECT_PORT} -j RETURN"
+    print_commented_rule "-d ${AGENTS_GATEWAY}/32 -p tcp --dport ${OLLAMA_DIRECT_PORT} -j RETURN"
   fi
 
-  echo "  -A ${CHAIN_NAME} -j DROP"
+  print_commented_rule "-j DROP"
 }
 
 apply_mode() {
