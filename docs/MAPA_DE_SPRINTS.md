@@ -67,7 +67,7 @@ El proyecto se ejecuta en seis sprints secuenciales, con dependencia fuerte entr
 - definir zonas de escritura del agente;
 - definir exclusiones y conflictos;
 - definir backups del vault;
-- definir plan de instalación y servicio de Syncthing.
+- definir plan de preparación e instalación de Syncthing.
 
 ### SHOULD
 - preparar guía de onboarding para escritorio y Android;
@@ -80,9 +80,16 @@ El proyecto se ejecuta en seis sprints secuenciales, con dependencia fuerte entr
 
 ### Entregables
 - ADR de arquitectura del vault;
-- runbook de Syncthing;
-- convención de carpetas;
-- política de ownership y conflictos.
+- ADR de ownership y límites de escritura;
+- runbook de preparación de Syncthing;
+- runbook de acceso seguro a la GUI;
+- convención de carpetas y zonas;
+- política de conflictos, exclusiones y backups;
+- borrador formal del sprint.
+
+### Restricción operativa
+- toda activación real en host queda `pendiente de verificación en host`;
+- Sprint 3 no da por desplegados Syncthing ni el vault canónico por existir estos documentos.
 
 ---
 

@@ -35,6 +35,9 @@ Ruta objetivo recomendada:
 
 - `/opt/data/obsidian/vault-main`
 
+La ruta anterior se trata como diseño objetivo del producto.
+Su materialización exacta en host queda `pendiente de verificación en host`.
+
 ### Runtime del agente
 OpenClaw sigue separado del vault:
 
@@ -51,16 +54,20 @@ La solución prevista es:
 - VPS como nodo canónico
 - nada de abrir el vault remoto live desde móvil o escritorio
 
+La instalación real, el usuario del servicio, el bind, la unidad de servicio y la exposición efectiva de Syncthing quedan `pendiente de verificación en host`.
+
 ### Escritura del agente
 OpenClaw no escribirá libremente sobre todo el vault.
 Las zonas iniciales de escritura permitida serán controladas, por ejemplo:
 
-- `Inbox_Agent/`
-- `Drafts_Agent/`
-- `Reports_Agent/`
-- `Heartbeat/`
+- `Agent/Inbox_Agent/`
+- `Agent/Drafts_Agent/`
+- `Agent/Reports_Agent/`
+- `Agent/Heartbeat/`
 
 La promoción a notas núcleo del usuario requerirá HITL.
+La lectura y escritura efectivas fuera de estas zonas quedan `pendiente de verificación en host` hasta política operativa cerrada.
+La convención canónica de carpetas se detalla en `docs/vault/CONVENCION_DE_CARPETAS_Y_ZONAS.md`.
 
 ## Estado de partida real
 
@@ -111,8 +118,22 @@ Objetivo:
 - definir layout del conocimiento;
 - definir política de conflictos;
 - definir exclusiones;
-- diseñar y preparar la instalación de Syncthing;
+- diseñar y preparar documentalmente la instalación de Syncthing;
 - preparar backups del vault.
+
+Alcance de Sprint 3 en este repositorio:
+
+- ADRs;
+- runbooks;
+- convenciones documentales;
+- criterios de ownership, conflictos, exclusiones y backups.
+
+Fuera de alcance por defecto:
+
+- despliegue en host;
+- activación de Syncthing;
+- apertura de GUI;
+- creación material del vault en DAVLOS.
 
 ### Sprint 4 — Integración controlada OpenClaw ↔ Vault + heartbeats
 Objetivo:

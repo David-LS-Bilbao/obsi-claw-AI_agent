@@ -59,7 +59,7 @@ Eso significa que este proyecto debe orientarse a:
 
 ## Decisión de arquitectura vigente
 
-La arquitectura documental vigente del proyecto asume:
+Como decisión de producto y diseño objetivo, la arquitectura documental vigente del proyecto asume:
 
 - vault canónico de Obsidian en el VPS DAVLOS;
 - Syncthing como solución prevista de sincronización;
@@ -72,7 +72,8 @@ Ruta objetivo recomendada para el vault:
 - `/opt/data/obsidian/vault-main`
 
 Esto **no** significa que Syncthing o el vault canónico ya estén desplegados.
-Durante Sprint 2 siguen fuera de alcance operativo y cualquier activación real queda `pendiente de verificación en host`.
+La ruta anterior debe leerse como diseño objetivo recomendado y queda `pendiente de verificación en host` como ruta operativa real.
+Toda activación real de vault, Syncthing, servicio, usuario del sistema, permisos y GUI sigue `pendiente de verificación en host`.
 
 ## 4. Visión del sistema
 
@@ -155,7 +156,7 @@ No incluye:
 ## Sprint 3 — Vault canónico + Syncthing + ownership
 Objetivo:
 - definir arquitectura final del vault canónico,
-- preparar Syncthing,
+- preparar documentalmente Syncthing,
 - definir ownership y conflictos,
 - fijar exclusiones y backups,
 - gobernar sincronización prudente sin corrupción.
@@ -196,6 +197,7 @@ obsi-claw-AI_agent/
 │  ├─ RIESGOS_Y_DECISIONES.md
 │  ├─ architecture/
 │  ├─ runbooks/
+│  ├─ vault/
 │  ├─ prompts/
 │  ├─ sprints/
 │  └─ evidence/

@@ -20,9 +20,15 @@ El proyecto usará una solución autogestionada basada en sincronización de arc
 ### DEC-004 — El vault canónico vivirá en el VPS DAVLOS
 **Estado:** aceptada
 
-Ruta objetivo recomendada:
+Decisión cerrada a nivel de producto:
+
+- el vault canónico debe vivir en DAVLOS y no dentro del runtime del agente.
+
+Ruta objetivo recomendada en diseño:
 
 - `/opt/data/obsidian/vault-main`
+
+La materialización exacta de esa ruta queda `pendiente de verificación en host`.
 
 ### DEC-005 — La sincronización prevista será mediante Syncthing
 **Estado:** aceptada
@@ -34,15 +40,30 @@ El modelo será:
 - sincronización de archivos,
 - nada de abrir el vault remoto en vivo.
 
+La instalación real, el usuario del servicio, el bind, la GUI y el método de acceso quedan `pendiente de verificación en host`.
+
 ### DEC-006 — OpenClaw no escribirá libremente sobre toda la bóveda
 **Estado:** aceptada
 
 Las primeras zonas de escritura del agente serán controladas y acotadas.
 
+La política exacta de lectura, promoción, movimiento y borrado se cierra en Sprint 3.
+
 ### DEC-007 — El cierre de egress en Sprint 2 se documenta sin inventar una primera activación no demostrable
 **Estado:** aceptada
 
 El gap `egress/allowlist` queda `VERDE` en Sprint 2, pero la última ventana revisada se documenta como validación/reaplicación idempotente porque los snapshots previos del propio script muestran estado ya activo antes del `apply` final.
+
+### DEC-008 — Sprint 3 se resuelve primero como arquitectura y preparación documental
+**Estado:** aceptada
+
+Sprint 3 no debe leerse como autorización implícita para desplegar Syncthing, crear el vault en host ni abrir la GUI.
+Su baseline en este repositorio es:
+
+- ADRs;
+- runbooks;
+- convenciones;
+- definición de ownership, conflictos, exclusiones y backups.
 
 ## Riesgos del proyecto
 
@@ -99,7 +120,10 @@ Mitigación:
 
 ## No decisiones todavía cerradas
 
-- ruta final exacta del vault si se separa `vault-main` y `vault-agent-zone`;
+- si conviene una carpeta hermana `vault-agent-zone` o solo zonas controladas dentro del vault principal;
 - exclusiones concretas de Syncthing;
+- usuario exacto del sistema para Syncthing y ownership de datos;
+- modo exacto de acceso seguro a la GUI;
 - estrategia final de backup incremental del vault;
+- procedimiento final de restore validado;
 - tratamiento específico de iOS.

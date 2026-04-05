@@ -20,6 +20,8 @@ Ruta opcional si más adelante se decide una separación más fuerte del agente:
 
 - `/opt/data/obsidian/vault-agent-zone`
 
+Ambas rutas se tratan como diseño objetivo recomendado y quedan `pendiente de verificación en host` hasta contraste con el layout operativo real de DAVLOS.
+
 ## Postura vigente
 
 - no abrir el vault remoto en vivo como carpeta editable multiusuario;
@@ -30,10 +32,12 @@ Ruta opcional si más adelante se decide una separación más fuerte del agente:
 
 ## Zonas iniciales controladas para el agente
 
-- `Inbox_Agent/`
-- `Drafts_Agent/`
-- `Reports_Agent/`
-- `Heartbeat/`
+- `Agent/Inbox_Agent/`
+- `Agent/Drafts_Agent/`
+- `Agent/Reports_Agent/`
+- `Agent/Heartbeat/`
+
+La convención canónica de carpetas se define en `docs/vault/CONVENCION_DE_CARPETAS_Y_ZONAS.md`.
 
 ## Ownership de escritura recomendado
 
@@ -65,7 +69,7 @@ Ruta opcional si más adelante se decide una separación más fuerte del agente:
 - resolver conflictos de sincronización;
 - autorizar escritura del agente fuera de zonas controladas.
 
-## Qué no pasa en Sprint 2
+## Qué no quedó activado al cierre de Sprint 2
 
 - no se instala Syncthing;
 - no se crea todavía el vault canónico en producción;
@@ -77,13 +81,16 @@ Ruta opcional si más adelante se decide una separación más fuerte del agente:
 - concretar arquitectura final del vault canónico;
 - definir exclusiones y política de conflictos;
 - definir backups;
-- diseñar e instalar Syncthing si la validación lo permite.
+- diseñar y dejar preparada documentalmente la instalación de Syncthing;
+- cerrar ownership, límites de lectura y límites de escritura del agente.
 
 ## Qué pasa a Sprint 4
 
 - habilitar la primera integración controlada OpenClaw ↔ vault;
 - activar heartbeats seguros;
 - validar que el agente no corrompe el vault.
+
+Nada de lo anterior debe asumirse desplegado por el solo hecho de que exista documentación de Sprint 3.
 
 ## Regla operativa final
 

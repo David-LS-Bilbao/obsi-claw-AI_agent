@@ -1,7 +1,13 @@
 # ADR-001 — VAULT CANÓNICO EN VPS + SYNCTHING + OPENCLAW SEPARADO
 
 ## Estado
-Aceptada
+Aceptada como decisión de producto
+
+## Alcance
+
+Esta ADR fija una dirección de arquitectura.
+No demuestra despliegue en host.
+No autoriza por sí sola instalación de Syncthing ni creación material del vault.
 
 ## Contexto
 
@@ -35,14 +41,18 @@ Se adopta la siguiente arquitectura:
 ### Posible zona específica del agente
 - `/opt/data/obsidian/vault-agent-zone`
 
+Las rutas anteriores son objetivo recomendado de diseño y quedan `pendiente de verificación en host` como estado materializado.
+
 ## Zonas iniciales de escritura permitida del agente
 
 Dentro del vault principal o en una subzona controlada:
 
-- `Inbox_Agent/`
-- `Drafts_Agent/`
-- `Reports_Agent/`
-- `Heartbeat/`
+- `Agent/Inbox_Agent/`
+- `Agent/Drafts_Agent/`
+- `Agent/Reports_Agent/`
+- `Agent/Heartbeat/`
+
+La convención de carpetas canónica se cierra en `docs/vault/CONVENCION_DE_CARPETAS_Y_ZONAS.md`.
 
 ## Consecuencias
 
@@ -62,12 +72,13 @@ Dentro del vault principal o en una subzona controlada:
 ## Decisiones derivadas
 
 - Sprint 2 no instalará Syncthing todavía.
-- Sprint 3 definirá e implementará la arquitectura del vault y la preparación de Syncthing.
+- Sprint 3 definirá y dejará preparada documentalmente la arquitectura del vault, la política de ownership y la preparación de Syncthing.
 - Sprint 4 habilitará la primera integración controlada OpenClaw ↔ vault.
 
 ## No objetivos de esta ADR
 
 - no define todavía exclusiones exactas de sync;
 - no define puertos, firewall ni despliegue operativo de Syncthing;
+- no fija todavía el usuario del sistema ni el ownership exacto del servicio de sincronización;
 - no autoriza activar sync bidireccional total;
 - no autoriza al agente a escribir sobre notas núcleo del usuario.
