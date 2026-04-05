@@ -48,10 +48,16 @@ Diseñar y, si la evidencia y la ventana operativa lo permiten, dejar listo o ej
 ## Entregables
 
 - plan de cambio de egress;
+- runbook tecnico de cambio;
+- checklist de prechecks, validacion y rollback;
 - evidencia pre y post;
-- runbook;
 - cierre formal del sprint;
 - resumen de relevo.
+
+Artefactos previstos en repo:
+
+- `docs/runbooks/OPENCLAW_EGRESS_ALLOWLIST_SPRINT_2.md`
+- `docs/checklists/OPENCLAW_EGRESS_CHANGE_CHECKLIST_SPRINT_2.md`
 
 ## Criterio de cierre
 
