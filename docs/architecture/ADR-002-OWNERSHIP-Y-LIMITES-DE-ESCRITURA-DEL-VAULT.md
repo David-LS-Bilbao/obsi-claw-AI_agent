@@ -1,7 +1,7 @@
 # ADR-002 — OWNERSHIP Y LÍMITES DE ESCRITURA DEL VAULT
 
 ## Estado
-Borrador de Sprint 3
+Aceptada como decisión de producto
 
 ## Propósito
 
@@ -52,10 +52,10 @@ El agente puede:
 
 La escritura del agente se limita por defecto a zonas controladas, por ejemplo:
 
-- `Inbox_Agent/`
-- `Drafts_Agent/`
-- `Reports_Agent/`
-- `Heartbeat/`
+- `Agent/Inbox_Agent/`
+- `Agent/Drafts_Agent/`
+- `Agent/Reports_Agent/`
+- `Agent/Heartbeat/`
 
 La lista exacta de carpetas canónicas se define en `docs/vault/CONVENCION_DE_CARPETAS_Y_ZONAS.md`.
 

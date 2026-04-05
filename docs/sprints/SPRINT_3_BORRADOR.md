@@ -76,12 +76,15 @@ Los dos últimos puntos quedan `pendiente de verificación en host`.
 
 ## Entregables esperados
 
+- `docs/architecture/ADR-001-VAULT-CANONICO-VPS-SYNCTHING.md`
 - `docs/architecture/ADR-002-OWNERSHIP-Y-LIMITES-DE-ESCRITURA-DEL-VAULT.md`
 - `docs/runbooks/SYNCTHING_DAVLOS_PREPARACION.md`
 - `docs/runbooks/SYNCTHING_GUI_ACCESO_SEGURO.md`
 - `docs/vault/CONVENCION_DE_CARPETAS_Y_ZONAS.md`
 - `docs/vault/CONFLICTOS_EXCLUSIONES_Y_BACKUPS.md`
-- este borrador de sprint
+- `docs/sprints/SPRINT_3_BORRADOR.md`
+- `docs/sprints/SPRINT_3_CIERRE_BORRADOR.md`
+- `RESUMEN_SPRINT_3.md`
 
 ## Riesgos principales
 

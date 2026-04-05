@@ -81,9 +81,9 @@ La promoción de contenido del agente a conocimiento estable requiere HITL.
 
 Ejemplos:
 
-- de `Drafts_Agent/` a proyecto o área;
-- de `Reports_Agent/` a documentación estable;
-- de `Inbox_Agent/` a nota estructurada.
+- de `Agent/Drafts_Agent/` a proyecto o área;
+- de `Agent/Reports_Agent/` a documentación estable;
+- de `Agent/Inbox_Agent/` a nota estructurada.
 
 ## Qué no se autoriza todavía
 

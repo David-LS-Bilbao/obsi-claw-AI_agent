@@ -85,7 +85,9 @@ El proyecto se ejecuta en seis sprints secuenciales, con dependencia fuerte entr
 - runbook de acceso seguro a la GUI;
 - convención de carpetas y zonas;
 - política de conflictos, exclusiones y backups;
-- borrador formal del sprint.
+- borrador formal del sprint;
+- borrador de cierre documental del sprint;
+- resumen de relevo hacia Sprint 4.
 
 ### Restricción operativa
 - toda activación real en host queda `pendiente de verificación en host`;
