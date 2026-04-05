@@ -276,6 +276,8 @@ Documentos clave:
 
 - [docs/sprints/SPRINT_1_CIERRE.md](docs/sprints/SPRINT_1_CIERRE.md)
 - [docs/sprints/SPRINT_2_CIERRE.md](docs/sprints/SPRINT_2_CIERRE.md)
+- [docs/evidence/VALIDACION_EGRESS_ALLOWLIST_SPRINT_2_2026-04-05.md](docs/evidence/VALIDACION_EGRESS_ALLOWLIST_SPRINT_2_2026-04-05.md)
+- [docs/checklists/SPRINT_2_CIERRE_CHECKLIST_CORREGIDO.md](docs/checklists/SPRINT_2_CIERRE_CHECKLIST_CORREGIDO.md)
 - [docs/ESTADO_SEMAFORICO.md](docs/ESTADO_SEMAFORICO.md)
 - [docs/sprints/SPRINT_2_BORRADOR.md](docs/sprints/SPRINT_2_BORRADOR.md)
 - [RESUMEN_SPRINT_1.md](RESUMEN_SPRINT_1.md)

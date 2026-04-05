@@ -14,6 +14,7 @@ El gap principal heredado de Sprint 1 queda `VERDE` con evidencia funcional sufi
 - `openclaw-gateway` alcanza `172.22.0.1:11440/tcp`;
 - `openclaw-gateway` ya no alcanza `1.1.1.1:443/tcp` en la prueba negativa controlada;
 - `11434/tcp` queda fuera por defecto.
+- la validación final consolidada queda documentada en `docs/evidence/VALIDACION_EGRESS_ALLOWLIST_SPRINT_2_2026-04-05.md`.
 
 ## Qué no se tocó
 
@@ -34,6 +35,7 @@ El gap principal heredado de Sprint 1 queda `VERDE` con evidencia funcional sufi
 Tomar como base:
 
 - `docs/sprints/SPRINT_2_CIERRE.md`
+- `docs/checklists/SPRINT_2_CIERRE_CHECKLIST_CORREGIDO.md`
 - `docs/ESTADO_SEMAFORICO.md`
 - `docs/RIESGOS_Y_DECISIONES.md`
 - `docs/architecture/ADR-001-VAULT-CANONICO-VPS-SYNCTHING.md`

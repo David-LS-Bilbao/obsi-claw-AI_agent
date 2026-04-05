@@ -54,7 +54,8 @@ Confirmado por:
 - `scripts/hardening/openclaw_egress_allowlist.sh` ya pasa `plan`, `apply` y `verify`;
 - allow efectivo a `172.22.0.1:11440/tcp`;
 - bloqueo efectivo probado de `1.1.1.1:443/tcp`;
-- juicio cronológico adoptado: la última ventana validó/reaplicó un estado que ya aparecía activo antes del `apply` final.
+- juicio cronológico adoptado: la última ventana validó/reaplicó un estado que ya aparecía activo antes del `apply` final;
+- validación final consolidada en `docs/evidence/VALIDACION_EGRESS_ALLOWLIST_SPRINT_2_2026-04-05.md`.
 
 ### RISK-002 — Conflictos de sincronización del vault
 **Estado:** ámbar

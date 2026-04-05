@@ -8,7 +8,11 @@ Preparar la ejecucion segura del primer hardening real y reversible de `egress/a
 
 Runbook preparado en este repositorio junto al script local de cambio.
 
-Sigue `pendiente de verificación en host` hasta ejecutarse en una ventana operativa controlada.
+Estado actual:
+
+- ya fue validado satisfactoriamente en host al cierre de Sprint 2;
+- la evidencia final consolidada queda en `docs/evidence/VALIDACION_EGRESS_ALLOWLIST_SPRINT_2_2026-04-05.md`;
+- este documento conserva el procedimiento operativo y el rollback, no solo el estado observado.
 
 ## Qué se toca
 
@@ -183,7 +187,7 @@ Si falla cualquier check critico:
 - Si `DOCKER-USER` ya contiene reglas no previstas, el script debe abortar por defecto.
 - Si `openclaw-gateway` necesitara realmente `11434/tcp` directo, este cambio podria romper reachability; por eso queda fuera del baseline y debe reabrirse solo con evidencia.
 - Si el nombre del bridge Docker cambia tras recrear la red, la evidencia y la validacion deben rehacerse antes de aplicar.
-- Este runbook no cambia el estado semaforico por si solo: `egress/allowlist` sigue en `ROJO` hasta validacion host-side satisfactoria.
+- Este runbook no cambia el estado semaforico por si solo: el paso a `VERDE` depende de validacion host-side satisfactoria, ya documentada para Sprint 2 en `docs/evidence/VALIDACION_EGRESS_ALLOWLIST_SPRINT_2_2026-04-05.md`.
 
 ## Qué queda fuera del sprint
 

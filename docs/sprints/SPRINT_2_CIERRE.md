@@ -6,6 +6,11 @@ Sprint 2 queda cerrado formalmente como sprint de hardening real de `egress/allo
 
 El gap técnico de `egress/allowlist` queda `VERDE` con evidencia funcional suficiente. El cierre debe redactarse de forma honesta: la última ventana revisada no puede presentarse como la primera activación demostrable del hardening, porque antes de ese `apply` ya aparecían reglas activas compatibles con la política final.
 
+Validación final consolidada:
+
+- `docs/evidence/VALIDACION_EGRESS_ALLOWLIST_SPRINT_2_2026-04-05.md`
+- `docs/checklists/SPRINT_2_CIERRE_CHECKLIST_CORREGIDO.md`
+
 ## Objetivo real del Sprint 2
 
 Cerrar el principal gap rojo heredado de Sprint 1:
@@ -39,6 +44,7 @@ La evidencia funcional mínima que soporta el cierre es:
 - la prueba positiva desde `openclaw-gateway` a `172.22.0.1:11440` devuelve `ALLOW_OK`;
 - la prueba negativa desde `openclaw-gateway` a `1.1.1.1:443` devuelve `BLOCK_OK ... TIMEOUT`;
 - el script ya no falla por desalineación interna entre `populate_chain()` y `verify_rules()`.
+- la validación final consolidada del `2026-04-05` queda registrada en `docs/evidence/VALIDACION_EGRESS_ALLOWLIST_SPRINT_2_2026-04-05.md`.
 
 ## Discrepancia cronológica detectada
 

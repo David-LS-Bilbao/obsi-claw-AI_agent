@@ -149,7 +149,7 @@ Si una tarea puede impactar producción:
 
 ### Red
 No asumas conectividad libre.
-No asumas allowlist aplicada.
+No asumas allowlist aplicada fuera de la evidencia vigente.
 No asumas acceso entre redes Docker si no hay evidencia.
 
 ## 11. Criterio de calidad
