@@ -1,84 +1,90 @@
 # README.md
 
-## Objetivo del vault en Sprint 1
+## Estado actual del vault
 
-En Sprint 1, la vault de Obsidian queda tratada solo como diseño prudente del plano de conocimiento. El objetivo no fue activar integración operativa, sino fijar una postura segura de estructura, ownership y límites de escritura para evitar mezclar documentación útil con automatización prematura.
+La arquitectura documental del proyecto ya asume una decisión de alto nivel:
+
+- el vault canónico vivirá en el VPS DAVLOS;
+- la sincronización prevista será mediante Syncthing;
+- OpenClaw seguirá separado del runtime del vault;
+- el agente solo escribirá en zonas controladas.
+
+Eso no significa que dicha arquitectura esté desplegada ya.
+Toda activación operativa real del vault o de Syncthing sigue `pendiente de verificación en host`.
+
+## Ruta objetivo recomendada
+
+- `/opt/data/obsidian/vault-main`
+
+Ruta opcional si más adelante se decide una separación más fuerte del agente:
+
+- `/opt/data/obsidian/vault-agent-zone`
 
 ## Postura vigente
 
-- no activar sync bidireccional;
+- no abrir el vault remoto en vivo como carpeta editable multiusuario;
+- no activar sync bidireccional total sin política de conflictos;
 - no reescribir notas núcleo del usuario;
 - no automatizar reorganización estructural agresiva;
-- sí permitir, como diseño futuro controlado, zonas de borradores, evidencias, sprints y runbooks donde el agente pueda producir material revisable.
+- sí diseñar zonas controladas donde el agente pueda producir material revisable.
 
-Toda integración operativa real con el runtime desplegado sigue `pendiente de verificación en host`.
+## Zonas iniciales controladas para el agente
 
-## Carpetas base recomendadas
-
-- `00_inbox_agente/`
-  - borradores temporales o capturas iniciales del agente.
-- `10_evidencias/`
-  - evidencias exportadas o resumidas desde verificaciones controladas.
-- `20_sprints/`
-  - cierres, resúmenes y seguimiento de sprint.
-- `30_runbooks_borrador/`
-  - runbooks en estado de trabajo y revisión.
-- `40_contexto_operativo/`
-  - contexto curado, glosarios, mapas o notas derivadas útiles.
-- `90_notas_nucleo_usuario/`
-  - notas manuales y de referencia estable del usuario; zona no editable por el agente.
+- `Inbox_Agent/`
+- `Drafts_Agent/`
+- `Reports_Agent/`
+- `Heartbeat/`
 
 ## Ownership de escritura recomendado
 
 - el usuario conserva ownership de:
   - notas núcleo;
   - documentación estable;
-  - estructura principal de la vault.
+  - estructura principal del vault.
 - el agente queda limitado a:
-  - evidencias;
+  - inbox controlada;
   - borradores;
-  - sprints;
-  - runbooks en zonas controladas.
+  - reportes;
+  - heartbeats;
+  - otras zonas autorizadas explícitamente.
 - cualquier paso desde borrador a nota estable debe pasar por HITL.
 
 ## Zonas donde el agente NO escribe
 
-- `90_notas_nucleo_usuario/`;
-- notas manuales consolidadas del usuario;
-- índices principales de la vault sin instrucción explícita;
-- convenciones globales de nombres o enlaces sin revisión humana.
+- notas núcleo del usuario;
+- índices principales del vault;
+- convenciones globales de nombres o enlaces sin revisión humana;
+- cualquier carpeta no incluida en la política de escritura controlada.
 
 ## Operaciones que requieren HITL
 
 - promover un borrador a documento canónico;
 - mover o borrar notas existentes;
-- cambiar carpetas base o taxonomía principal;
-- habilitar sync, import/export automático o reconciliación de conflictos;
+- cambiar taxonomía principal;
+- habilitar sync operativo;
+- resolver conflictos de sincronización;
 - autorizar escritura del agente fuera de zonas controladas.
 
-## Qué sí puede producir el agente en un futuro tramo controlado
+## Qué no pasa en Sprint 2
 
-- capturas de evidencia;
-- resúmenes de sprint;
-- borradores de runbooks;
-- notas de trabajo en áreas controladas;
-- índices derivados o resúmenes donde el usuario lo haya autorizado.
+- no se instala Syncthing;
+- no se crea todavía el vault canónico en producción;
+- no se abre superficie de red para sync;
+- no se activa integración operativa OpenClaw ↔ vault.
 
-## Qué no pasa aún
+## Qué pasa a Sprint 3
 
-- sync bidireccional;
-- reescritura de notas núcleo del usuario;
-- mantenimiento automático de enlaces o renombrados masivos;
-- automatización estructural agresiva;
-- ownership amplio del agente sobre la vault.
+- concretar arquitectura final del vault canónico;
+- definir exclusiones y política de conflictos;
+- definir backups;
+- diseñar e instalar Syncthing si la validación lo permite.
 
-## Qué pasa a Sprint 2
+## Qué pasa a Sprint 4
 
-- decidir si existe un flujo prudente de exportación o promoción desde el repo a la vault;
-- validar naming y lifecycle de las zonas controladas;
-- diseñar plantillas mínimas de sprint, evidencia y runbook para Obsidian;
-- mantener toda integración real con HITL y rollback claro.
+- habilitar la primera integración controlada OpenClaw ↔ vault;
+- activar heartbeats seguros;
+- validar que el agente no corrompe el vault.
 
 ## Regla operativa final
 
-Si la integración con Obsidian exige asumir conflictos, locking, ownership o sync no resueltos, no se activa.
+Si la integración con el vault exige asumir conflictos, locking, ownership o sync no resueltos, no se activa.

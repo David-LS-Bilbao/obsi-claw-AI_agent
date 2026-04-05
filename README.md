@@ -52,10 +52,27 @@ En DAVLOS ya existe una base operativa previa de OpenClaw/OpenClaw boundary docu
 
 Eso significa que este proyecto debe orientarse a:
 
-1. **auditar lo ya desplegado**,  
-2. **consolidar y endurecer**,  
-3. **integrar Obsidian de forma segura**,  
+1. **auditar lo ya desplegado**,
+2. **consolidar y endurecer**,
+3. **gobernar el vault canónico e integrar Obsidian de forma segura**,
 4. **convertir el MVP en plataforma mantenible**.
+
+## Decisión de arquitectura vigente
+
+La arquitectura documental vigente del proyecto asume:
+
+- vault canónico de Obsidian en el VPS DAVLOS;
+- Syncthing como solución prevista de sincronización;
+- copias locales del vault en los dispositivos del usuario;
+- OpenClaw separado del runtime del vault;
+- escritura del agente solo en zonas controladas.
+
+Ruta objetivo recomendada para el vault:
+
+- `/opt/data/obsidian/vault-main`
+
+Esto **no** significa que Syncthing o el vault canónico ya estén desplegados.
+Durante Sprint 2 siguen fuera de alcance operativo y cualquier activación real queda `pendiente de verificación en host`.
 
 ## 4. Visión del sistema
 
@@ -129,21 +146,25 @@ Objetivo:
 - preparar allowlist real,
 - reducir superficie y riesgo SSRF.
 
-## Sprint 3 — Integración Obsidian
-Objetivo:
-- definir estructura del vault,
-- flujo de captura,
-- plantillas,
-- memoria operativa,
-- sincronización prudente sin corrupción.
+No incluye:
+- instalar Syncthing;
+- activar el vault canónico;
+- mezclar puertos o políticas de sync con el boundary OpenClaw.
 
-## Sprint 4 — Rutinas autónomas y heartbeats
+## Sprint 3 — Vault canónico + Syncthing + ownership
 Objetivo:
-- heartbeats,
-- organización automática de notas,
-- resúmenes,
-- flujos de revisión,
-- tareas delegables.
+- definir arquitectura final del vault canónico,
+- preparar Syncthing,
+- definir ownership y conflictos,
+- fijar exclusiones y backups,
+- gobernar sincronización prudente sin corrupción.
+
+## Sprint 4 — Integración controlada OpenClaw ↔ Vault + heartbeats
+Objetivo:
+- habilitar zonas controladas de escritura del agente,
+- activar heartbeats seguros,
+- promover borradores con HITL,
+- validar que el agente no corrompe el vault.
 
 ## Sprint 5 — Operador técnico
 Objetivo:
@@ -259,4 +280,4 @@ Documentos clave:
 
 ## 13. Próximo paso recomendado
 
-Abrir Sprint 2 con foco principal en el hardening real, pequeño y reversible, de `egress/allowlist`, manteniendo Obsidian en modo diseño prudente y Telegram como track secundario de validación.
+Abrir Sprint 2 con foco principal en el hardening real, pequeño y reversible, de `egress/allowlist`, manteniendo la nueva arquitectura `vault canónico + Syncthing` como contexto ya decidido pero todavía fuera de alcance operativo.
