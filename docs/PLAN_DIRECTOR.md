@@ -35,8 +35,11 @@ Ruta objetivo recomendada:
 
 - `/opt/data/obsidian/vault-main`
 
-La ruta anterior se trata como diseño objetivo del producto.
-Su materialización exacta en host queda `pendiente de verificación en host`.
+La ruta anterior ya quedó validada y materializada en host como:
+
+- `/opt/data/obsidian/vault-main`
+
+La evidencia canónica quedó registrada en `docs/evidence/VALIDACION_HOST_VAULT_SYNCTHING_SPRINT_3_2026-04-05.md`.
 
 ### Runtime del agente
 OpenClaw sigue separado del vault:
@@ -54,7 +57,22 @@ La solución prevista es:
 - VPS como nodo canónico
 - nada de abrir el vault remoto live desde móvil o escritorio
 
-La instalación real, el usuario del servicio, el bind, la unidad de servicio y la exposición efectiva de Syncthing quedan `pendiente de verificación en host`.
+Estado host-side ya validado en Sprint 3:
+
+- `syncthing@syncthing.service` activo;
+- usuario de sistema `syncthing`;
+- config bajo `/var/lib/syncthing`;
+- GUI en `127.0.0.1:8384` con auth local;
+- listener TCP en `127.0.0.1:22000`;
+- sin carpetas activas;
+- sin dispositivos remotos.
+
+Siguen `pendiente de verificación en host`:
+
+- alta de la primera carpeta real del vault en Syncthing;
+- pairing con clientes;
+- exclusiones exactas de sync;
+- backups operativos y restore.
 
 ### Escritura del agente
 OpenClaw no escribirá libremente sobre todo el vault.

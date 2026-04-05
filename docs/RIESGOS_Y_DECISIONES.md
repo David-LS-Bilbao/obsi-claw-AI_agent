@@ -28,7 +28,8 @@ Ruta objetivo recomendada en diseño:
 
 - `/opt/data/obsidian/vault-main`
 
-La materialización exacta de esa ruta queda `pendiente de verificación en host`.
+La ruta ya quedó materializada y validada en host.
+La evidencia canónica quedó registrada en `docs/evidence/VALIDACION_HOST_VAULT_SYNCTHING_SPRINT_3_2026-04-05.md`.
 
 ### DEC-005 — La sincronización prevista será mediante Syncthing
 **Estado:** aceptada
@@ -40,7 +41,22 @@ El modelo será:
 - sincronización de archivos,
 - nada de abrir el vault remoto en vivo.
 
-La instalación real, el usuario del servicio, el bind, la GUI y el método de acceso quedan `pendiente de verificación en host`.
+Ya quedó validado en host un baseline mínimo:
+
+- `syncthing@syncthing.service`;
+- usuario dedicado `syncthing`;
+- GUI solo en loopback;
+- acceso administrativo por túnel SSH;
+- auth local explícita;
+- sin carpetas activas;
+- sin dispositivos remotos.
+
+Siguen `pendiente de verificación en host`:
+
+- alta de la primera carpeta real del vault;
+- pairing con clientes;
+- exclusiones exactas de sync;
+- backups operativos.
 
 ### DEC-006 — OpenClaw no escribirá libremente sobre toda la bóveda
 **Estado:** aceptada

@@ -71,9 +71,22 @@ Ruta objetivo recomendada para el vault:
 
 - `/opt/data/obsidian/vault-main`
 
-Esto **no** significa que Syncthing o el vault canónico ya estén desplegados.
-La ruta anterior debe leerse como diseño objetivo recomendado y queda `pendiente de verificación en host` como ruta operativa real.
-Toda activación real de vault, Syncthing, servicio, usuario del sistema, permisos y GUI sigue `pendiente de verificación en host`.
+Validación host-side reciente:
+
+- `/opt/data/obsidian/vault-main` ya existe en DAVLOS;
+- el vault quedó materializado con ownership `devops:obsidian`;
+- `syncthing@syncthing.service` ya existe y está activo;
+- la GUI quedó ligada a `127.0.0.1:8384` con autenticación local;
+- no hay todavía carpetas activas ni dispositivos remotos.
+
+La evidencia canónica de este estado quedó registrada en `docs/evidence/VALIDACION_HOST_VAULT_SYNCTHING_SPRINT_3_2026-04-05.md`.
+
+Esto **no** significa que ya exista sincronización productiva:
+
+- no hay pairing con clientes;
+- no hay carpeta del vault dada de alta todavía en Syncthing;
+- no hay exposición pública de la GUI;
+- no hay integración OpenClaw ↔ vault.
 
 ## 4. Visión del sistema
 

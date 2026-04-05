@@ -9,7 +9,7 @@ Obsi-Claw combina dos planos:
 
 Sprint 1 cerró baseline y gobierno técnico.
 Sprint 2 cerró documentalmente y con evidencia funcional suficiente el gap de `egress/allowlist`.
-Sprint 3 no despliega nada nuevo en host: consolida la arquitectura documental del vault, Syncthing, ownership y límites del agente.
+Sprint 3 arrancó como cierre documental de arquitectura y hoy ya añade validación host-side mínima del vault y del plano administrativo de Syncthing, sin pairing y sin integración OpenClaw ↔ Vault.
 
 ## Estado consolidado al final de Sprint 3
 
@@ -25,18 +25,22 @@ Sprint 3 no despliega nada nuevo en host: consolida la arquitectura documental d
 ### Estado real observado
 
 - existe un boundary OpenClaw previo en DAVLOS documentado en la base del proyecto;
-- Sprint 3 no añade evidencia nueva de despliegue de Syncthing;
-- Sprint 3 no añade evidencia nueva de existencia material del vault canónico en host.
+- existe `/opt/data/obsidian/vault-main` materializado con ownership `devops:obsidian`;
+- existe `syncthing@syncthing.service` activo con config bajo `/var/lib/syncthing`;
+- la GUI de Syncthing escucha solo en `127.0.0.1:8384` y exige auth local;
+- el listener TCP de Syncthing quedó en `127.0.0.1:22000`;
+- Syncthing sigue con `0` carpetas activas y `0` dispositivos remotos;
+- no hay referencias runtime nuevas entre OpenClaw y `/opt/data/obsidian`.
+
+La evidencia canónica de este estado quedó registrada en `docs/evidence/VALIDACION_HOST_VAULT_SYNCTHING_SPRINT_3_2026-04-05.md`.
 
 ### Pendiente de verificación en host
 
-- ruta real del vault;
-- layout real de la zona del agente;
-- ownership y permisos efectivos;
-- servicio real de Syncthing;
-- método final de acceso seguro a GUI;
+- alta de la primera carpeta real del vault dentro de Syncthing;
 - exclusiones exactas de sync;
-- estrategia operativa de backup y restore.
+- estrategia operativa de backup y restore;
+- pairing con clientes;
+- postura final por plataforma, sobre todo iOS.
 
 ## Decisiones cerradas
 
@@ -44,14 +48,12 @@ Sprint 3 no despliega nada nuevo en host: consolida la arquitectura documental d
 - OpenClaw no queda autorizado para escribir libremente sobre toda la bóveda;
 - las zonas controladas del agente se modelan bajo `Agent/Inbox_Agent/`, `Agent/Drafts_Agent/`, `Agent/Reports_Agent/` y `Agent/Heartbeat/`;
 - las notas núcleo del usuario y la taxonomía principal quedan fuera de escritura directa del agente;
-- Syncthing se trata como sync previsto y controlado, no como despliegue ya realizado;
-- la GUI de Syncthing no debe exponerse públicamente por defecto.
+- Syncthing ya existe como servicio mínimo, pero todavía no como sync productivo;
+- la GUI de Syncthing quedó cerrada en loopback con auth local y acceso recomendado por túnel SSH.
 
 ## Decisiones abiertas
 
 - si la zona del agente vivirá dentro del vault principal o en carpeta hermana;
-- usuario y grupo del sistema;
-- permisos efectivos del vault;
 - política exacta de conflictos;
 - exclusiones exactas de sincronización;
 - política operativa mínima de backup y restore;
@@ -82,14 +84,14 @@ Sprint 3 no despliega nada nuevo en host: consolida la arquitectura documental d
 
 ## Siguiente paso lógico
 
-Abrir Sprint 4 solo como sprint de integración controlada OpenClaw ↔ Vault, después de contrastar en host qué partes siguen siendo únicamente diseño objetivo.
+Seguir dentro de Sprint 3, sin abrir Sprint 4 todavía.
 
-El orden prudente es:
+El orden prudente ahora es:
 
-1. verificar estado real del vault y de Syncthing en host;
-2. cerrar ownership y permisos efectivos;
-3. habilitar, si procede, una primera zona de escritura real del agente;
-4. mantener HITL y mínimo privilegio como baseline.
+1. dar de alta `vault-main` como carpeta local en Syncthing;
+2. mantener `0` dispositivos remotos y `0` pairing;
+3. validar exclusiones de sync y backups operativos;
+4. mantener separación estricta entre OpenClaw y el vault.
 
 ## Prompt breve de arranque para Sprint 4
 
