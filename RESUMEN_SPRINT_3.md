@@ -38,7 +38,7 @@ Sprint 3 cierra la arquitectura del vault y añade baseline host-side mínima ya
 - política prudente de conflictos, exclusiones y backup;
 - postura documental por plataforma para escritorio, Android e iPhone/iPad.
 
-### Pendiente de verificación en host
+### Pendiente fuera del cierre de Sprint 3
 
 - pairing y onboarding real con clientes;
 - necesidad real de una `vault-agent-zone` separada;
