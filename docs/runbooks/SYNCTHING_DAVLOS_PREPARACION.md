@@ -2,115 +2,62 @@
 
 ## Propósito
 
-Definir la postura documental y los prechecks mínimos para una futura preparación de Syncthing en DAVLOS sin asumir que esté instalado ni desplegado.
+Congelar la baseline host-side mínima de Syncthing en DAVLOS y dejar claro qué partes del trabajo de clientes siguen fuera de alcance.
 
 ## Estado
 
-Borrador de Sprint 3.
+Baseline host-side mínima validada en Sprint 3.
 
-Todo despliegue real queda `pendiente de verificación en host`.
+## Estado real observado
 
-## Objetivo de este runbook
+Ya quedó confirmado en host que:
 
-Dejar claro:
+- Syncthing está instalado y operativo como `syncthing@syncthing.service`;
+- usa usuario dedicado `syncthing`;
+- la config vive bajo `/var/lib/syncthing`;
+- la GUI escucha solo en `127.0.0.1:8384` con auth local;
+- el listener TCP escucha solo en `127.0.0.1:22000`;
+- `vault-main` quedó dada de alta como carpeta local;
+- existe `.stignore` mínimo conservador;
+- no hay dispositivos remotos;
+- no hay pairing;
+- no hay listeners públicos de Syncthing.
 
-- para qué se usaría Syncthing;
-- qué no debe hacerse por defecto;
-- qué decisiones previas deben cerrarse;
-- qué validar antes de tocar host;
-- cómo documentar rollback conceptual.
+## Decisión documental cerrada
 
-## Postura prevista
+La postura baseline para DAVLOS queda así:
 
-Syncthing se adopta como solución prevista de sincronización de archivos para el vault canónico:
+- DAVLOS actúa como nodo canónico;
+- Syncthing se mantiene local-first y localhost-only en administración;
+- el vault vivo no se expone como carpeta remota de edición multiusuario;
+- Syncthing no se trata como sustituto de backup;
+- OpenClaw sigue separado del vault y de Syncthing.
 
-- DAVLOS como nodo canónico;
-- clientes con copia local;
-- nada de abrir el vault remoto en vivo;
-- nada de usar Syncthing como excusa para dar escritura libre al agente.
+## Qué no debe hacerse
 
-## Alcance documental
+- abrir la GUI o el listener TCP a IP pública;
+- dar por validado un cliente por el solo hecho de existir este runbook;
+- convertir `vault-main` en sync productivo sin pairing controlado;
+- mezclar la preparación de clientes con cambios en OpenClaw.
 
-Este runbook no:
+## Validaciones ya cerradas
 
-- instala paquetes;
-- crea servicios;
-- abre puertos;
-- crea carpetas reales;
-- modifica firewall;
-- toca systemd.
-
-## Diseño objetivo recomendado
-
-### Ruta objetivo
-
-- vault principal recomendado: `/opt/data/obsidian/vault-main`
-- subzona opcional del agente: `/opt/data/obsidian/vault-agent-zone`
-
-Estas rutas quedan `pendiente de verificación en host`.
-
-### Servicio esperado
-
-La opción recomendada es un servicio persistente, pequeño y reversible.
-
-Pero quedan `pendiente de verificación en host`:
-
-- usuario exacto del sistema;
-- unidad de servicio;
-- bind de GUI;
-- rutas de configuración;
-- puertos efectivos.
-
-## Ownership recomendado
-
-Baseline recomendada:
-
-- el vault pertenece al usuario humano o a una cuenta explícitamente aprobada para conocimiento;
-- OpenClaw no debe ser owner del vault;
-- Syncthing no debe justificar por sí solo permisos amplios para el agente.
-
-El ownership exacto queda `pendiente de verificación en host`.
-
-## Superficie mínima recomendada
-
-- GUI localhost-only como baseline recomendada;
-- acceso administrativo solo por túnel SSH o canal equivalente controlado;
-- nada de exposición pública por defecto;
-- nada de apertura de superficie “temporal” sin runbook y rollback.
-
-## Validaciones previas mínimas
-
-Antes de cualquier despliegue real debería validarse:
-
-- que la ruta canónica del vault es coherente con el layout real del host;
-- que existe política de ownership cerrada;
-- que existe política de conflictos y exclusiones;
-- que existe política mínima de backup y restore;
-- que la apertura de GUI no amplía superficie innecesaria;
-- que el método de acceso remoto está definido.
-
-## Riesgos principales
-
-- conflictos de sincronización;
-- drift entre dispositivos;
-- mezcla entre runtime del agente y conocimiento del usuario;
-- exposición innecesaria de la GUI;
-- permisos demasiado amplios.
-
-## Rollback documental
-
-Si una futura preparación real no supera validaciones:
-
-1. no desplegar;
-2. no abrir puertos;
-3. no materializar servicio persistente;
-4. mantener el vault fuera de cualquier sync activo;
-5. registrar el bloqueo y volver a estado documental.
+- ruta canónica del vault: `/opt/data/obsidian/vault-main`;
+- servicio dedicado de Syncthing;
+- carpeta local `vault-main` dada de alta;
+- `.stignore` mínimo conservador;
+- backup manual y restore de prueba independientes de Syncthing.
 
 ## Pendiente de verificación en host
 
-- si Syncthing ya está instalado;
-- qué paquete o método de instalación conviene en DAVLOS;
-- qué usuario del sistema debe ejecutarlo;
-- qué puertos y binds serían válidos;
-- qué rutas reales existen o conviene crear.
+- pairing y onboarding real con clientes.
+
+## Rollback documental
+
+Si en una fase posterior fallan validaciones de clientes:
+
+1. no hacer pairing adicional;
+2. no abrir puertos;
+3. no ampliar superficie de Syncthing;
+4. mantener `vault-main` como carpeta local del nodo canónico;
+5. registrar el bloqueo sin tocar OpenClaw.

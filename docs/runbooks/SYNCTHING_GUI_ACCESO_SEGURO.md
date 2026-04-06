@@ -2,71 +2,54 @@
 
 ## Propósito
 
-Definir la postura recomendada de acceso seguro a la GUI de Syncthing para DAVLOS sin asumir despliegue real.
+Definir la postura segura de acceso administrativo a la GUI de Syncthing en DAVLOS.
 
 ## Estado
 
-Borrador de Sprint 3.
+Baseline host-side mínima validada en Sprint 3.
 
-Todo bind, puerto, servicio o acceso real queda `pendiente de verificación en host`.
+## Estado real observado
 
-## Baseline recomendada
+Ya quedó validado en host que:
 
-- GUI accesible solo por localhost;
+- la GUI escucha en `127.0.0.1:8384`;
+- exige autenticación local;
+- no hay listeners públicos de Syncthing;
+- el listener TCP de sincronización quedó en `127.0.0.1:22000`.
+
+## Decisión documental cerrada
+
+La postura baseline es:
+
+- GUI solo en loopback;
 - sin exposición pública por defecto;
-- acceso remoto únicamente mediante túnel SSH o equivalente controlado;
-- sin publicar la GUI en IP pública del VPS.
+- administración local o por canal privado controlado cuando llegue a ser necesario;
+- nada de mezclar acceso humano a la GUI con automatización del agente.
 
-## Motivo
-
-Abrir la GUI de Syncthing sin perímetro claro introduce superficie innecesaria sobre el nodo canónico del conocimiento.
-
-## Modelo recomendado
-
-### Opción base
-
-- bind local en loopback;
-- túnel SSH cuando haga falta administración;
-- sesiones puntuales y auditables.
-
-### Opción alternativa controlada
-
-Un canal privado equivalente puede evaluarse más adelante, pero queda `pendiente de verificación en host`.
-
-## Qué no debe hacerse por defecto
+## Qué no debe hacerse
 
 - exponer la GUI a Internet;
 - abrir puertos públicos “solo para probar”;
 - dejar la GUI accesible desde redes no controladas;
-- mezclar acceso de usuario final con automatización del agente.
-
-## Validaciones mínimas antes de cualquier acceso real
-
-- confirmar bind efectivo y alcance de escucha;
-- confirmar usuario del servicio;
-- confirmar que el canal de acceso no rompe la política de mínimo privilegio;
-- confirmar que no se exponen credenciales ni tokens;
-- confirmar rollback claro para cerrar acceso.
+- persistir credenciales o tokens en el repositorio.
 
 ## Riesgos
 
-- exposición innecesaria de superficie de administración;
-- acceso desde redes no previstas;
-- confusión entre acceso humano y acceso del agente;
-- credenciales persistidas en lugares inadecuados.
+- ampliar superficie de administración del nodo canónico;
+- mezclar acceso humano y automatización;
+- normalizar atajos inseguros por comodidad operativa.
+
+## Cierre de Sprint 3
+
+La postura `localhost-only` ya basta para el cierre de Sprint 3.
+
+Cualquier método administrativo remoto adicional queda fuera del alcance de este cierre y no bloquea el sprint.
 
 ## Rollback documental
 
-Si la postura de acceso seguro no está clara:
+Si la postura segura deja de estar clara:
 
-1. no abrir GUI;
+1. volver a `localhost-only`;
 2. no publicar puertos;
-3. mantener Syncthing sin exposición administrativa remota;
-4. registrar el punto como `pendiente de verificación en host`.
-
-## Pendiente de verificación en host
-
-- puerto exacto de GUI si se instala Syncthing;
-- unidad de servicio;
-- método operativo preferido entre túnel SSH u otro canal controlado;
-- si existe algún requisito adicional del entorno DAVLOS.
+3. no abrir acceso administrativo adicional;
+4. registrar el punto como no apto para avanzar hacia pairing.

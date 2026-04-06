@@ -46,17 +46,16 @@ Ya quedó validado en host un baseline mínimo:
 - `syncthing@syncthing.service`;
 - usuario dedicado `syncthing`;
 - GUI solo en loopback;
-- acceso administrativo por túnel SSH;
 - auth local explícita;
-- sin carpetas activas;
-- sin dispositivos remotos.
+- listener TCP solo en loopback;
+- `vault-main` registrada como carpeta local;
+- `.stignore` mínimo conservador;
+- backup manual del vault y restore de prueba;
+- sin dispositivos remotos ni pairing.
 
 Siguen `pendiente de verificación en host`:
 
-- alta de la primera carpeta real del vault;
-- pairing con clientes;
-- exclusiones exactas de sync;
-- backups operativos.
+- pairing y validación real con clientes.
 
 ### DEC-006 — OpenClaw no escribirá libremente sobre toda la bóveda
 **Estado:** aceptada
@@ -70,16 +69,21 @@ La política exacta de lectura, promoción, movimiento y borrado se cierra en Sp
 
 El gap `egress/allowlist` queda `VERDE` en Sprint 2, pero la última ventana revisada se documenta como validación/reaplicación idempotente porque los snapshots previos del propio script muestran estado ya activo antes del `apply` final.
 
-### DEC-008 — Sprint 3 se resuelve primero como arquitectura y preparación documental
+### DEC-008 — Sprint 3 se resuelve primero como arquitectura y después como baseline host-side mínima
 **Estado:** aceptada
 
-Sprint 3 no debe leerse como autorización implícita para desplegar Syncthing, crear el vault en host ni abrir la GUI.
+Sprint 3 arrancó como sprint de arquitectura y preparación documental.
+La validación host-side posterior se limitó a una baseline mínima y reversible del vault y de Syncthing, sin pairing, sin clientes y sin integración OpenClaw ↔ Vault.
+
+Sprint 3 no debe leerse como autorización implícita para abrir clientes, publicar la GUI ni abrir Sprint 4.
 Su baseline en este repositorio es:
 
 - ADRs;
 - runbooks;
 - convenciones;
-- definición de ownership, conflictos, exclusiones y backups.
+- definición de ownership, conflictos, exclusiones y backups;
+- documentación de flujos futuros por plataforma;
+- congelación documental del estado host-side realmente validado.
 
 ## Riesgos del proyecto
 
@@ -137,9 +141,6 @@ Mitigación:
 ## No decisiones todavía cerradas
 
 - si conviene una carpeta hermana `vault-agent-zone` o solo zonas controladas dentro del vault principal;
-- exclusiones concretas de Syncthing;
-- usuario exacto del sistema para Syncthing y ownership de datos;
-- modo exacto de acceso seguro a la GUI;
-- estrategia final de backup incremental del vault;
-- procedimiento final de restore validado;
-- tratamiento específico de iOS.
+- la superficie real de lectura que se autorizaría al agente fuera de zonas controladas;
+- la retención y automatización posteriores del backup del vault;
+- el pairing y la validación real con clientes.

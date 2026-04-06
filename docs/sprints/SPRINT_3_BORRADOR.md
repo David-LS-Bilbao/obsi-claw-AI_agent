@@ -2,77 +2,70 @@
 
 ## Estado
 
-Borrador de trabajo de Sprint 3.
-
-No autoriza despliegue en host por sí solo.
+Documento base consolidado para evaluación final de cierre de Sprint 3.
 
 ## Objetivo real
 
-Consolidar la base documental y arquitectónica para:
+Cerrar Sprint 3 como sprint de:
 
-- vault canónico en VPS;
-- Syncthing como solución prevista de sincronización;
+- arquitectura del vault canónico;
+- baseline host-side mínima del vault y de Syncthing;
 - política de ownership;
 - separación vault/runtime;
 - conflictos, exclusiones y backups;
-- zonas controladas de escritura del agente;
-- preparación segura para una futura integración controlada OpenClaw ↔ Vault.
+- postura prudente por plataforma;
+- preparación documental para fases futuras sin activar clientes.
 
 ## Alcance
 
 ### Dentro de alcance
 
 - ADRs y decisiones de arquitectura;
-- runbooks de preparación;
+- runbooks de Syncthing y de clientes futuros;
 - política de ownership;
 - convención de carpetas y zonas;
-- conflictos, exclusiones y backups;
-- criterios de Sprint 4.
+- conflictos, exclusiones, renombrados, borrados y backups;
+- cierre documental del baseline host-side mínima ya validada.
 
 ### Fuera de alcance
 
-- instalar Syncthing;
-- abrir la GUI;
-- crear el vault en DAVLOS;
-- tocar permisos reales del host;
-- integrar operativamente OpenClaw con el vault;
-- dar escritura libre al agente.
+- pairing real con clientes;
+- onboarding real de escritorio o Android;
+- despliegue en iPhone/iPad;
+- integración operativa OpenClaw ↔ Vault;
+- apertura pública de Syncthing;
+- escritura libre del agente sobre el vault.
 
 ## Estado real observado que sirve de baseline
 
-- OpenClaw ya existe como boundary en DAVLOS;
-- Sprint 2 cerró técnicamente `egress/allowlist`;
-- Telegram sigue en ámbar;
-- no hay evidencia en este repositorio de que Syncthing esté desplegado;
-- no hay evidencia en este repositorio de que el vault canónico exista ya en host.
+- existe `/opt/data/obsidian/vault-main`;
+- el vault base tiene ownership `devops:obsidian`;
+- el árbol base del vault ya está materializado;
+- `syncthing@syncthing.service` está activo;
+- la GUI de Syncthing escucha en `127.0.0.1:8384` con auth local;
+- el listener TCP escucha en `127.0.0.1:22000`;
+- `vault-main` quedó registrada como carpeta local;
+- existe `.stignore` mínimo conservador;
+- existe backup manual en `/opt/backups/obsidian` y restore de prueba en ruta temporal;
+- no hay dispositivos remotos;
+- no hay pairing;
+- no hay integración OpenClaw ↔ Vault.
 
-Los dos últimos puntos quedan `pendiente de verificación en host`.
+## Decisiones cerradas
 
-## Precedencia y divergencias
-
-- la evidencia verificable y el estado real observado prevalecen sobre documentos históricos;
-- `davlos-control-plane` sigue siendo referencia operativa del VPS;
-- algunas piezas de `davlos-control-plane` conservan cautelas históricas sobre OpenClaw y egress, así que deben leerse con fecha y alcance;
-- este sprint no reabre Sprint 2, salvo para mantener coherencia documental mínima cuando haya contradicción explícita.
-
-## Decisiones ya cerradas
-
-- el vault canónico debe vivir en DAVLOS como decisión de producto;
+- el vault canónico vive en DAVLOS;
 - Syncthing es la solución prevista de sincronización;
 - el runtime del agente permanece separado del vault;
 - el agente no escribe libremente sobre toda la bóveda;
-- la promoción a notas núcleo requiere HITL.
+- las zonas controladas baseline viven bajo `Agent/Inbox_Agent/`, `Agent/Drafts_Agent/`, `Agent/Reports_Agent/` y `Agent/Heartbeat/`;
+- la promoción a notas núcleo requiere HITL;
+- Syncthing no sustituye a backup.
 
-## Decisiones abiertas
+## Qué sigue abierto
 
-- si la subzona del agente vive dentro del vault principal o en carpeta hermana;
-- ownership exacto en host;
-- usuario del sistema para Syncthing;
-- exclusiones exactas de sync;
-- política concreta de conflictos;
-- estrategia mínima de backup y restore;
-- postura exacta para iOS;
-- método final de acceso seguro a la GUI.
+- pairing y onboarding real con clientes;
+- decisión final sobre una eventual `vault-agent-zone` separada;
+- superficie real de lectura del agente fuera de zonas controladas;
 
 ## Entregables esperados
 
@@ -80,27 +73,32 @@ Los dos últimos puntos quedan `pendiente de verificación en host`.
 - `docs/architecture/ADR-002-OWNERSHIP-Y-LIMITES-DE-ESCRITURA-DEL-VAULT.md`
 - `docs/runbooks/SYNCTHING_DAVLOS_PREPARACION.md`
 - `docs/runbooks/SYNCTHING_GUI_ACCESO_SEGURO.md`
+- `docs/runbooks/CLIENTE_ESCRITORIO_SYNCTHING_OBSIDIAN.md`
+- `docs/runbooks/CLIENTE_ANDROID_SYNCTHING_OBSIDIAN.md`
+- `docs/runbooks/VAULT_BACKUP_RETENCION_Y_DISPARADORES.md`
 - `docs/vault/CONVENCION_DE_CARPETAS_Y_ZONAS.md`
 - `docs/vault/CONFLICTOS_EXCLUSIONES_Y_BACKUPS.md`
+- `docs/vault/POSTURA_IPHONE_IPAD_SYNCTHING_OBSIDIAN.md`
 - `docs/sprints/SPRINT_3_BORRADOR.md`
 - `docs/sprints/SPRINT_3_CIERRE_BORRADOR.md`
+- `docs/sprints/SPRINT_3_PR_REVIEW.md`
 - `RESUMEN_SPRINT_3.md`
 
 ## Riesgos principales
 
-- mezclar vault y runtime del agente;
-- abrir la GUI de Syncthing sin perímetro claro;
-- permitir escritura demasiado amplia al agente;
-- confundir decisión de diseño con estado ya desplegado;
-- tratar Syncthing como sustituto de backup.
+- confundir baseline host-side mínima con sync productivo;
+- abrir clientes sin backup reciente;
+- abrir superficie innecesaria alrededor de Syncthing;
+- diluir ownership del conocimiento del usuario;
+- mezclar vault y runtime del agente.
 
 ## Criterio de cierre
 
-Sprint 3 puede cerrarse documentalmente si:
+Sprint 3 puede darse por listo para cierre si:
 
-- existe política clara de ownership y límites de escritura;
-- existe postura prudente de Syncthing;
-- existe convención de carpetas;
-- existe postura mínima de conflictos, exclusiones y backups;
-- queda explícito qué sigue `pendiente de verificación en host`;
-- Sprint 4 queda preparado sin activar todavía integración operativa.
+- el estado real observado y la decisión documental cerrada quedan separados con claridad;
+- los pendientes reales de host se reducen a pairing y clientes, no a la baseline mínima ya validada;
+- existe postura por plataforma sin venderla como validación real con clientes;
+- existe política prudente de conflictos, exclusiones, backup y restore;
+- Sprint 4 no se abre ni implícita ni documentalmente;
+- la lectura canónica del sprint es de cierre cerrable por checklist y evidencia dentro de su alcance real.

@@ -64,15 +64,15 @@ Estado host-side ya validado en Sprint 3:
 - config bajo `/var/lib/syncthing`;
 - GUI en `127.0.0.1:8384` con auth local;
 - listener TCP en `127.0.0.1:22000`;
-- sin carpetas activas;
-- sin dispositivos remotos.
+- sin listeners públicos de Syncthing;
+- `vault-main` registrada como carpeta local;
+- `.stignore` mínimo conservador materializado;
+- backup manual del vault validado con restore de prueba;
+- sin dispositivos remotos ni pairing.
 
 Siguen `pendiente de verificación en host`:
 
-- alta de la primera carpeta real del vault en Syncthing;
-- pairing con clientes;
-- exclusiones exactas de sync;
-- backups operativos y restore.
+- pairing y onboarding real con clientes.
 
 ### Escritura del agente
 OpenClaw no escribirá libremente sobre todo el vault.
@@ -84,7 +84,7 @@ Las zonas iniciales de escritura permitida serán controladas, por ejemplo:
 - `Agent/Heartbeat/`
 
 La promoción a notas núcleo del usuario requerirá HITL.
-La lectura y escritura efectivas fuera de estas zonas quedan `pendiente de verificación en host` hasta política operativa cerrada.
+La lectura y escritura efectivas fuera de estas zonas quedan `pendiente de verificación en host` hasta definición operativa posterior de esa superficie.
 La convención canónica de carpetas se detalla en `docs/vault/CONVENCION_DE_CARPETAS_Y_ZONAS.md`.
 
 ## Estado de partida real
@@ -129,29 +129,30 @@ Resultado real ejecutado:
 - el juicio cronológico adoptado es de validación/reaplicación idempotente en la última ventana revisada.
 
 ### Sprint 3 — Vault canónico en VPS + Syncthing + política de ownership
-**Estado:** siguiente sprint
+**Estado:** cerrable por checklist y evidencia
 
 Objetivo:
 - fijar arquitectura del vault;
-- definir layout del conocimiento;
-- definir política de conflictos;
-- definir exclusiones;
-- diseñar y preparar documentalmente la instalación de Syncthing;
-- preparar backups del vault.
+- consolidar el layout del conocimiento;
+- cerrar política de conflictos, exclusiones y backups;
+- congelar la baseline host-side mínima ya validada de Syncthing y del vault;
+- dejar definidos los flujos futuros de cliente sin activarlos.
 
 Alcance de Sprint 3 en este repositorio:
 
 - ADRs;
 - runbooks;
 - convenciones documentales;
-- criterios de ownership, conflictos, exclusiones y backups.
+- criterios de ownership, conflictos, exclusiones y backups;
+- postura por plataforma para escritorio, Android e iPhone/iPad;
+- cierre documental del baseline host-side mínimo validado.
 
 Fuera de alcance por defecto:
 
-- despliegue en host;
-- activación de Syncthing;
-- apertura de GUI;
-- creación material del vault en DAVLOS.
+- pairing con clientes;
+- onboarding real de clientes;
+- apertura pública de GUI o puertos;
+- integración operativa OpenClaw ↔ Vault.
 
 ### Sprint 4 — Integración controlada OpenClaw ↔ Vault + heartbeats
 Objetivo:

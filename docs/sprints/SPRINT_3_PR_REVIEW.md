@@ -2,76 +2,66 @@
 
 ## Estado
 
-Documento de preparación para revisión humana y futura PR de Sprint 3.
+Documento de preparación para revisión humana y PR de cierre de Sprint 3.
 
-No autoriza despliegue en host.
-No sustituye validación operativa.
+No sustituye validación operativa adicional ni autoriza pairing.
 
 ## Resumen de PR
 
 ### Objetivo del sprint
 
-Consolidar la base documental y arquitectónica para:
+Consolidar Sprint 3 como sprint de:
 
-- vault canónico en VPS;
-- Syncthing como solución prevista de sincronización;
+- arquitectura del vault canónico;
+- baseline host-side mínima del vault y de Syncthing;
 - política de ownership;
 - separación vault/runtime;
-- conflictos, exclusiones y backups;
-- zonas controladas de escritura del agente;
-- preparación segura para una futura integración controlada OpenClaw ↔ Vault.
+- conflictos, exclusiones, renombrados, borrados y backups;
+- postura prudente por plataforma sin activar clientes.
 
 ### Qué se ha documentado
 
 - ADR del vault canónico y de la separación OpenClaw/vault;
 - ADR de ownership y límites de escritura del agente;
-- runbook de preparación de Syncthing en DAVLOS;
+- runbook de baseline host-side de Syncthing en DAVLOS;
 - runbook de acceso seguro a la GUI de Syncthing;
+- runbooks de cliente futuro para escritorio y Android;
+- postura prudente para iPhone/iPad;
+- política de backup, retención y disparadores;
 - convención canónica de carpetas y zonas del vault;
-- baseline documental de conflictos, exclusiones y backups;
-- borrador del sprint;
-- borrador de cierre documental;
-- resumen de relevo hacia Sprint 4.
+- baseline de conflictos, exclusiones y backups;
+- borrador del sprint, borrador de cierre y resumen final.
+
+### Estado real observado
+
+- existe `/opt/data/obsidian/vault-main`;
+- el vault base tiene ownership `devops:obsidian`;
+- Syncthing opera como servicio dedicado;
+- la GUI escucha solo en `127.0.0.1:8384`;
+- el listener TCP escucha solo en `127.0.0.1:22000`;
+- `vault-main` quedó registrada como carpeta local;
+- existe `.stignore` mínimo conservador;
+- existe backup manual con restore de prueba;
+- no hay dispositivos remotos;
+- no hay pairing;
+- OpenClaw sigue separado del vault y de Syncthing.
 
 ### Decisiones cerradas
 
-- el vault canónico en DAVLOS queda fijado como diseño objetivo de producto;
-- Syncthing queda fijado como solución prevista de sincronización;
-- el runtime del agente debe permanecer separado del vault;
+- el vault canónico en DAVLOS queda fijado como baseline de producto;
+- Syncthing queda fijado como baseline host-side mínima y como solución prevista de sincronización;
+- el runtime del agente permanece separado del vault;
 - OpenClaw no queda autorizado para escribir libremente sobre toda la bóveda;
 - las zonas controladas del agente se modelan bajo `Agent/Inbox_Agent/`, `Agent/Drafts_Agent/`, `Agent/Reports_Agent/` y `Agent/Heartbeat/`;
 - la promoción a conocimiento estable requiere HITL;
-- la postura base es de mínimo privilegio para lectura y escritura.
+- Syncthing no sustituye backup;
+- iPhone/iPad no queda aprobado como primer cliente objetivo de Sprint 3.
 
 ### Qué sigue abierto
 
-- si la zona del agente vivirá dentro del vault principal o en carpeta hermana;
-- ownership exacto en host;
-- usuario y grupo del sistema para Syncthing;
-- exclusiones exactas de sincronización;
-- política concreta de conflictos;
-- estrategia operativa mínima de backup y restore;
-- postura final por plataforma, especialmente iOS;
-- método final de acceso seguro a la GUI.
-
-### Pendiente de verificación en host
-
-- ruta operativa real del vault canónico;
-- existencia material del vault en DAVLOS;
-- existencia o no de despliegue real de Syncthing;
-- usuario, grupo y permisos efectivos;
-- binds, puertos y unidad de servicio reales;
-- exclusiones efectivas de sync;
-- mecanismo operativo de backup y restore.
-
-### Riesgos residuales
-
-- confundir diseño objetivo con estado real observado;
-- abrir superficie innecesaria alrededor de Syncthing;
-- diluir ownership del conocimiento del usuario;
-- permitir que el agente salga de zonas controladas;
-- tratar Syncthing como sustituto de backup;
-- abrir Sprint 4 sin contraste previo en host.
+- pairing y onboarding real con clientes;
+- necesidad real de una `vault-agent-zone` separada;
+- superficie real de lectura del agente fuera de zonas controladas;
 
 ## Documentos canónicos a revisar primero
 
@@ -83,8 +73,12 @@ Consolidar la base documental y arquitectónica para:
 - `docs/architecture/ADR-002-OWNERSHIP-Y-LIMITES-DE-ESCRITURA-DEL-VAULT.md`
 - `docs/runbooks/SYNCTHING_DAVLOS_PREPARACION.md`
 - `docs/runbooks/SYNCTHING_GUI_ACCESO_SEGURO.md`
+- `docs/runbooks/CLIENTE_ESCRITORIO_SYNCTHING_OBSIDIAN.md`
+- `docs/runbooks/CLIENTE_ANDROID_SYNCTHING_OBSIDIAN.md`
+- `docs/runbooks/VAULT_BACKUP_RETENCION_Y_DISPARADORES.md`
 - `docs/vault/CONVENCION_DE_CARPETAS_Y_ZONAS.md`
 - `docs/vault/CONFLICTOS_EXCLUSIONES_Y_BACKUPS.md`
+- `docs/vault/POSTURA_IPHONE_IPAD_SYNCTHING_OBSIDIAN.md`
 - `docs/sprints/SPRINT_3_BORRADOR.md`
 - `docs/sprints/SPRINT_3_CIERRE_BORRADOR.md`
 - `RESUMEN_SPRINT_3.md`
@@ -92,63 +86,50 @@ Consolidar la base documental y arquitectónica para:
 ## Checklist de revisión humana
 
 - [ ] Hay coherencia entre `README.md`, `docs/PLAN_DIRECTOR.md`, `docs/MAPA_DE_SPRINTS.md` y las ADRs.
-- [ ] Ningún documento convierte diseño objetivo en despliegue ya realizado.
+- [ ] Los documentos separan `estado real observado`, `decisión documental cerrada` y `pendiente de verificación en host`.
+- [ ] Ningún documento convierte flujos cliente definidos en pairing ya validado.
 - [ ] El ownership humano del conocimiento queda fijado de forma explícita.
 - [ ] El agente queda restringido a zonas controladas y no parece autorizado para escribir libremente sobre toda la bóveda.
-- [ ] La convención `Agent/...` se usa de forma coherente como naming canónico.
-- [ ] Syncthing se trata como solución prevista y no como componente activado.
-- [ ] La GUI de Syncthing se trata como acceso localhost-only o canal controlado, no como superficie pública.
-- [ ] Conflictos, exclusiones y backups quedan tratados como baseline prudente.
-- [ ] `pendiente de verificación en host` se usa donde todavía no hay evidencia material.
-- [ ] Sprint 4 aparece preparado, pero no activado todavía.
+- [ ] Syncthing aparece como baseline host-side mínima ya validada, sin convertirse en sync productivo.
+- [ ] La GUI de Syncthing queda como `localhost-only` sin superficie pública nueva.
+- [ ] Conflictos, exclusiones, renombrados, borrados y backups quedan tratados como baseline prudente.
+- [ ] La postura de iPhone/iPad queda documentada sin venderla como despliegue viable ya ejecutado.
+- [ ] Sprint 4 no aparece abierto ni implícita ni operativamente.
 
 ## Texto base para descripción de PR
 
 ```md
 ## Objetivo
 
-Preparar Sprint 3 como sprint documental de arquitectura y gobierno del vault, sin desplegar Syncthing ni activar todavía la integración operativa OpenClaw ↔ Vault.
+Cerrar Sprint 3 como sprint cerrable por checklist y evidencia dentro de su alcance real: arquitectura del vault y baseline host-side mínima ya validada para Syncthing y backup, sin pairing y sin abrir Sprint 4.
 
 ## Qué incluye
 
 - ADR del vault canónico y de la separación vault/runtime
 - ADR de ownership y límites de escritura
-- runbook de preparación de Syncthing
+- runbook de baseline host-side de Syncthing
 - runbook de acceso seguro a la GUI
-- convención de carpetas y zonas controladas
-- baseline de conflictos, exclusiones y backups
-- borrador de sprint, borrador de cierre y resumen de relevo
+- runbooks de cliente futuro para escritorio y Android
+- postura prudente para iPhone/iPad
+- política de conflictos, exclusiones, renombrados, borrados, backup y restore
+- borrador del sprint, borrador de cierre y resumen final
 
-## Decisiones cerradas
+## Estado real observado
 
-- vault canónico en DAVLOS como diseño objetivo
-- Syncthing como solución prevista de sincronización
-- runtime del agente separado del vault
-- escritura del agente limitada a `Agent/Inbox_Agent/`, `Agent/Drafts_Agent/`, `Agent/Reports_Agent/` y `Agent/Heartbeat/`
-- HITL obligatorio para promoción a conocimiento estable
-- mínimo privilegio como baseline
+- existe `/opt/data/obsidian/vault-main`
+- Syncthing opera como servicio dedicado con GUI en `127.0.0.1:8384` y listener TCP en `127.0.0.1:22000`
+- `vault-main` ya está registrada como carpeta local
+- existe `.stignore` mínimo conservador
+- existe backup manual con restore de prueba
+- no hay dispositivos remotos
+- no hay pairing
+- no hay integración OpenClaw ↔ vault
 
 ## Qué no hace esta PR
 
-- no despliega Syncthing
-- no crea el vault en host
-- no fija permisos efectivos en DAVLOS
-- no abre GUI ni puertos
+- no hace pairing con clientes
+- no valida onboarding real de escritorio o Android
+- no despliega clientes iOS/iPadOS
+- no abre GUI ni puertos públicos
 - no activa Sprint 4
-
-## Pendiente de verificación en host
-
-- ruta real del vault
-- ownership y permisos efectivos
-- servicio, binds y puertos reales de Syncthing
-- exclusiones exactas de sync
-- estrategia operativa de backup y restore
-
-## Riesgos residuales
-
-- confundir diseño con despliegue
-- abrir más superficie de la necesaria
-- diluir ownership del usuario
-- permitir escritura demasiado amplia al agente
-- tratar Syncthing como sustituto de backup
 ```

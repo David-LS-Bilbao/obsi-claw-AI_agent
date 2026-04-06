@@ -59,7 +59,7 @@ El proyecto se ejecuta en seis sprints secuenciales, con dependencia fuerte entr
 ---
 
 ## Sprint 3 — Vault canónico en VPS + Syncthing + política de ownership
-**Estado:** siguiente
+**Estado:** cerrable por checklist y evidencia
 
 ### MUST
 - decidir ruta canónica del vault en VPS;
@@ -83,15 +83,28 @@ El proyecto se ejecuta en seis sprints secuenciales, con dependencia fuerte entr
 - ADR de ownership y límites de escritura;
 - runbook de preparación de Syncthing;
 - runbook de acceso seguro a la GUI;
+- runbook de cliente de escritorio;
+- runbook de cliente Android;
+- postura de iPhone/iPad;
+- runbook de backup, retención y disparadores;
 - convención de carpetas y zonas;
 - política de conflictos, exclusiones y backups;
 - borrador formal del sprint;
 - borrador de cierre documental del sprint;
-- resumen de relevo hacia Sprint 4.
+- resumen final del sprint.
+
+### Resultado observado
+- `/opt/data/obsidian/vault-main` quedó materializado con ownership base `devops:obsidian`;
+- Syncthing quedó operativo como servicio dedicado, con GUI en `127.0.0.1:8384` y listener TCP en `127.0.0.1:22000`;
+- `vault-main` quedó registrada como carpeta local, con `.stignore` mínimo conservador;
+- no hay dispositivos remotos ni pairing;
+- existe backup manual del vault y restore de prueba fuera del vault vivo;
+- OpenClaw sigue separado del vault y de Syncthing.
 
 ### Restricción operativa
-- toda activación real en host queda `pendiente de verificación en host`;
-- Sprint 3 no da por desplegados Syncthing ni el vault canónico por existir estos documentos.
+- Sprint 3 ya dispone de baseline host-side mínima validada;
+- Sprint 3 no valida pairing ni onboarding real de clientes;
+- Sprint 3 no autoriza apertura pública de Syncthing ni integración OpenClaw ↔ Vault.
 
 ---
 

@@ -6,14 +6,23 @@ Definir la postura mínima y prudente para:
 
 - conflictos de sincronización;
 - exclusiones iniciales de sync;
+- renombrados y borrados;
 - backups del vault;
 - restore y validación.
 
 ## Estado
 
-Borrador de Sprint 3.
+Baseline documental cerrada con validación host-side mínima en Sprint 3.
 
-No demuestra que exista una política desplegada en host.
+## Estado real observado
+
+Sprint 3 ya dejó materializado en host que:
+
+- `vault-main` es una carpeta local de Syncthing;
+- no hay dispositivos remotos ni pairing;
+- existe `.stignore` mínimo conservador en `/opt/data/obsidian/vault-main/.stignore`;
+- existe backup manual del vault en `/opt/backups/obsidian`;
+- existe restore de prueba en ruta temporal fuera del vault vivo.
 
 ## Conflictos previsibles
 
@@ -38,51 +47,69 @@ Cambios en taxonomía, nombres o carpetas pueden desalinear sync y enlaces.
 
 ## Exclusiones iniciales de sync
 
-Como baseline prudente, deben evaluarse para exclusión:
+La lista mínima y conservadora ya materializada en `.stignore` es:
 
-- cachés o metadatos locales no necesarios;
-- temporales de trabajo del agente si no forman parte del conocimiento estable;
-- directorios de exportación efímera;
-- cualquier artefacto que aumente ruido entre dispositivos.
+```text
+.DS_Store
+Thumbs.db
+desktop.ini
+*~
+*.swp
+*.swo
+.~lock.*
+.obsidian/cache/**
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/window-state.json
+```
 
-La lista exacta queda abierta y `pendiente de verificación en host`.
+### Qué no se ignora todavía
+
+- contenido Markdown;
+- adjuntos reales del vault;
+- carpetas núcleo del usuario;
+- `Agent/`;
+- `.obsidian` completa;
+- plugins, themes, snippets o templates.
+
+## Renombrados y borrados
+
+La baseline cerrada en Sprint 3 es:
+
+- nada de renombrados masivos mientras no haya clientes validados;
+- nada de borrados automáticos por parte del agente;
+- toda operación estructural relevante requiere HITL;
+- cualquier renombrado o borrado amplio deberá ir precedido por backup o snapshot cuando ese mecanismo exista;
+- Syncthing no se usa como sustituto de recuperación.
 
 ## Backups
 
-### Postura mínima
+### Postura mínima ya validada
 
-- el vault canónico debe tener backups trazables;
-- el backup no debe depender solo de Syncthing;
-- debe existir restore validable, no solo copia de archivos.
-
-### Preguntas aún abiertas
-
-- frecuencia exacta;
-- ubicación exacta en DAVLOS;
-- incremental vs snapshot completo;
-- retención;
-- validación periódica de restore.
+- el vault canónico tiene backup trazable en el VPS;
+- el backup no depende de Syncthing;
+- existe restore validado en ruta temporal;
+- la política de retención y disparadores se detalla en `docs/runbooks/VAULT_BACKUP_RETENCION_Y_DISPARADORES.md`.
 
 ## Restore
 
-Baseline recomendada:
+Baseline ya validada:
 
-1. restaurar sobre entorno controlado;
-2. validar integridad del árbol;
-3. revisar notas núcleo y zonas del agente;
-4. confirmar que la política de exclusiones y conflictos sigue siendo coherente.
+1. restaurar sobre ruta temporal fuera del vault vivo;
+2. verificar integridad básica del árbol restaurado;
+3. comparar inventario básico con el vault vivo;
+4. solo después evaluar una recuperación real.
 
 ## Qué no debe asumirse
 
 - que Syncthing sustituye a backup;
 - que restore está resuelto por existir una copia;
 - que conflictos de sync pueden dejarse a criterio implícito del usuario;
-- que el agente pueda reconciliar conflictos automáticamente.
+- que el agente puede reconciliar conflictos automáticamente.
 
 ## Pendiente de verificación en host
 
-- ubicación real de backups;
-- mecanismo real de backup;
-- frecuencia viable;
-- procedimiento exacto de restore;
-- exclusiones concretas que conviene fijar en Syncthing y en el propio vault.
+- pairing real con clientes;
+- ajustes futuros de exclusiones cuando aparezca contenido cliente real;
+- retención y automatización posteriores al baseline manual;
+- cualquier restore real sobre el vault vivo.

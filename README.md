@@ -77,14 +77,19 @@ Validación host-side reciente:
 - el vault quedó materializado con ownership `devops:obsidian`;
 - `syncthing@syncthing.service` ya existe y está activo;
 - la GUI quedó ligada a `127.0.0.1:8384` con autenticación local;
-- no hay todavía carpetas activas ni dispositivos remotos.
+- el listener TCP de Syncthing quedó en `127.0.0.1:22000`;
+- `vault-main` ya quedó registrada como carpeta local en Syncthing;
+- no hay dispositivos remotos, no hay pairing y no hay listeners públicos de Syncthing;
+- existe `.stignore` mínimo conservador;
+- existe backup manual del vault en `/opt/backups/obsidian` con restore de prueba en ruta temporal;
+- OpenClaw sigue separado del vault y de Syncthing.
 
 La evidencia canónica de este estado quedó registrada en `docs/evidence/VALIDACION_HOST_VAULT_SYNCTHING_SPRINT_3_2026-04-05.md`.
 
 Esto **no** significa que ya exista sincronización productiva:
 
 - no hay pairing con clientes;
-- no hay carpeta del vault dada de alta todavía en Syncthing;
+- no hay onboarding validado de clientes de escritorio o Android;
 - no hay exposición pública de la GUI;
 - no hay integración OpenClaw ↔ vault.
 
@@ -300,4 +305,4 @@ Documentos clave:
 
 ## 13. Próximo paso recomendado
 
-Abrir Sprint 3 con foco en `vault canónico + Syncthing + ownership`, manteniendo ya cerrado el gap técnico de `egress/allowlist` y sin mezclar el trabajo futuro del vault con el hardening ya validado del boundary.
+Cerrar formalmente Sprint 3 en documentación y checklist, manteniendo fuera de alcance el pairing con clientes, la integración OpenClaw ↔ vault y cualquier apertura de superficie adicional.

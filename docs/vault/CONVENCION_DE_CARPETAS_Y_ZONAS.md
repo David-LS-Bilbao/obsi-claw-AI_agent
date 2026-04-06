@@ -2,7 +2,7 @@
 
 ## Propósito
 
-Definir un árbol inicial recomendado del vault y separar con claridad:
+Definir el árbol base del vault y separar con claridad:
 
 - conocimiento núcleo del usuario;
 - zonas controladas del agente;
@@ -10,22 +10,15 @@ Definir un árbol inicial recomendado del vault y separar con claridad:
 
 ## Estado
 
-Borrador de Sprint 3.
+Baseline documental cerrada con materialización host-side del árbol base en Sprint 3.
 
-El árbol aquí descrito es diseño objetivo.
-No demuestra estructura ya desplegada en host.
+## Estado real observado
 
-## Ruta base recomendada
+Ya quedó materializado en host:
 
 - `/opt/data/obsidian/vault-main`
 
-Ruta opcional para una separación más fuerte del agente:
-
-- `/opt/data/obsidian/vault-agent-zone`
-
-Ambas quedan `pendiente de verificación en host`.
-
-## Árbol inicial recomendado
+Con árbol base:
 
 ```text
 vault-main/
@@ -42,6 +35,18 @@ vault-main/
    ├─ Reports_Agent/
    └─ Heartbeat/
 ```
+
+## Decisión documental cerrada
+
+### Ruta base del vault
+
+- `/opt/data/obsidian/vault-main`
+
+### Ruta opcional todavía no materializada
+
+- `/opt/data/obsidian/vault-agent-zone`
+
+La carpeta hermana `vault-agent-zone` queda como opción futura, no como baseline cerrada de Sprint 3.
 
 ## Criterio de zonas
 
@@ -95,6 +100,6 @@ Ejemplos:
 
 ## Pendiente de verificación en host
 
-- si conviene una carpeta `Agent/` dentro del vault principal o una carpeta hermana `vault-agent-zone`;
-- el árbol exacto que mejor encaja con el uso real del usuario;
-- ownership y permisos efectivos de cada zona.
+- si conviene una `vault-agent-zone` separada en lugar de `Agent/` dentro del vault principal;
+- cualquier control fino adicional de permisos por zona;
+- la futura superficie real de lectura del agente.
