@@ -20,9 +20,16 @@ El proyecto usará una solución autogestionada basada en sincronización de arc
 ### DEC-004 — El vault canónico vivirá en el VPS DAVLOS
 **Estado:** aceptada
 
-Ruta objetivo recomendada:
+Decisión cerrada a nivel de producto:
+
+- el vault canónico debe vivir en DAVLOS y no dentro del runtime del agente.
+
+Ruta objetivo recomendada en diseño:
 
 - `/opt/data/obsidian/vault-main`
+
+La ruta ya quedó materializada y validada en host.
+La evidencia canónica quedó registrada en `docs/evidence/VALIDACION_HOST_VAULT_SYNCTHING_SPRINT_3_2026-04-05.md`.
 
 ### DEC-005 — La sincronización prevista será mediante Syncthing
 **Estado:** aceptada
@@ -34,15 +41,49 @@ El modelo será:
 - sincronización de archivos,
 - nada de abrir el vault remoto en vivo.
 
+Ya quedó validado en host un baseline mínimo:
+
+- `syncthing@syncthing.service`;
+- usuario dedicado `syncthing`;
+- GUI solo en loopback;
+- auth local explícita;
+- listener TCP solo en loopback;
+- `vault-main` registrada como carpeta local;
+- `.stignore` mínimo conservador;
+- backup manual del vault y restore de prueba;
+- sin dispositivos remotos ni pairing.
+
+Siguen `pendiente de verificación en host`:
+
+- pairing y validación real con clientes.
+
 ### DEC-006 — OpenClaw no escribirá libremente sobre toda la bóveda
 **Estado:** aceptada
 
 Las primeras zonas de escritura del agente serán controladas y acotadas.
 
+La política exacta de lectura, promoción, movimiento y borrado se cierra en Sprint 3.
+
 ### DEC-007 — El cierre de egress en Sprint 2 se documenta sin inventar una primera activación no demostrable
 **Estado:** aceptada
 
 El gap `egress/allowlist` queda `VERDE` en Sprint 2, pero la última ventana revisada se documenta como validación/reaplicación idempotente porque los snapshots previos del propio script muestran estado ya activo antes del `apply` final.
+
+### DEC-008 — Sprint 3 se resuelve primero como arquitectura y después como baseline host-side mínima
+**Estado:** aceptada
+
+Sprint 3 arrancó como sprint de arquitectura y preparación documental.
+La validación host-side posterior se limitó a una baseline mínima y reversible del vault y de Syncthing, sin pairing, sin clientes y sin integración OpenClaw ↔ Vault.
+
+Sprint 3 no debe leerse como autorización implícita para abrir clientes, publicar la GUI ni abrir Sprint 4.
+Su baseline en este repositorio es:
+
+- ADRs;
+- runbooks;
+- convenciones;
+- definición de ownership, conflictos, exclusiones y backups;
+- documentación de flujos futuros por plataforma;
+- congelación documental del estado host-side realmente validado.
 
 ## Riesgos del proyecto
 
@@ -99,7 +140,7 @@ Mitigación:
 
 ## No decisiones todavía cerradas
 
-- ruta final exacta del vault si se separa `vault-main` y `vault-agent-zone`;
-- exclusiones concretas de Syncthing;
-- estrategia final de backup incremental del vault;
-- tratamiento específico de iOS.
+- si conviene una carpeta hermana `vault-agent-zone` o solo zonas controladas dentro del vault principal;
+- la superficie real de lectura que se autorizaría al agente fuera de zonas controladas;
+- la retención y automatización posteriores del backup del vault;
+- el pairing y la validación real con clientes.

@@ -15,6 +15,12 @@
 - La prueba funcional readonly del broker core confirma ejecución real de `action.health.general.v1` fuera de Telegram, con auditoría before/after coherente y sin cambios de estado efectivo.
 - Sprint 2 cerró técnicamente `egress/allowlist` con evidencia suficiente: hoy existe `DOCKER-USER -> OPENCLAW-EGRESS`, allow efectivo a `172.22.0.1:11440/tcp`, `DROP` final y bloqueo funcional probado de `1.1.1.1:443/tcp`.
 - La validación final consolidada del cierre quedó registrada en `docs/evidence/VALIDACION_EGRESS_ALLOWLIST_SPRINT_2_2026-04-05.md`.
+- Sprint 3 ya añadió validación host-side mínima del plano vault/Syncthing, registrada en `docs/evidence/VALIDACION_HOST_VAULT_SYNCTHING_SPRINT_3_2026-04-05.md`.
+- Existe `/opt/data/obsidian/vault-main` materializado con ownership `devops:obsidian` y permisos base `2770`.
+- `syncthing@syncthing.service` existe y está activo como servicio dedicado con config bajo `/var/lib/syncthing`.
+- La GUI de Syncthing escucha solo en `127.0.0.1:8384`, requiere auth local y el listener TCP operativo quedó en `127.0.0.1:22000`.
+- Syncthing sigue sin carpetas activas y sin dispositivos remotos.
+- No aparecieron referencias runtime nuevas entre OpenClaw y `/opt/data/obsidian`.
 
 ## Semáforo actual del boundary
 
@@ -33,11 +39,12 @@
 
 - Telegram persistente activo pero con warnings de polling;
 - contrato final de secretos y semántica final de health/readiness.
+- plano vault/Syncthing materializado de forma mínima, pero todavía sin carpeta activa, sin pairing y sin backups operativos.
 
 ### Rojo
 
 - coherencia documental global entre fuentes de `control-plane`;
-- cualquier supuesto de integración operativa con Obsidian más allá del diseño.
+- cualquier supuesto de pairing, sincronización productiva o integración OpenClaw ↔ Vault más allá del plano administrativo local ya validado.
 
 ## Qué está pendiente de validar en host
 
@@ -46,6 +53,11 @@
 - Si se quisiera declarar operativo un canal no-Telegram autenticado del broker, eso queda `pendiente de verificación en host`.
 - Nivel de divergencia entre el árbol operativo real y los documentos del checkpoint.
 - Si se quisiera ampliar la allowlist o reabrir `11434/tcp`, eso queda `pendiente de verificación en host`.
+- alta de la primera carpeta real del vault dentro de Syncthing;
+- exclusiones exactas de sync;
+- política operativa de backup y restore del vault;
+- pairing con clientes;
+- postura final por plataforma, sobre todo iOS.
 
 ## Qué no debe asumirse aún
 
@@ -55,6 +67,7 @@
 - Que exista ya un canal autenticado no-Telegram del broker desplegado y operativo.
 - Que el agente tenga ya permiso de escritura sobre una vault Obsidian productiva.
 - Que exista una política resuelta para sync bidireccional o resolución de conflictos.
+- Que Syncthing ya tenga una carpeta activa del vault o clientes remotos emparejados.
 
 ## Divergencias documentales abiertas
 
