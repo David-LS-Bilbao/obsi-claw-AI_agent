@@ -62,7 +62,8 @@ Siguen pendientes fuera del cierre de Sprint 3:
 
 Las primeras zonas de escritura del agente serán controladas y acotadas.
 
-La política exacta de lectura, promoción, movimiento y borrado se cierra en Sprint 3.
+Sprint 3 cerró la baseline y los límites iniciales.
+Sprint 4 debe operacionalizar la política exacta de lectura, promoción, movimiento y rollback del agente dentro de ese perímetro.
 
 ### DEC-007 — El cierre de egress en Sprint 2 se documenta sin inventar una primera activación no demostrable
 **Estado:** aceptada

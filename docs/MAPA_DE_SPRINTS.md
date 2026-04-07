@@ -109,7 +109,7 @@ El proyecto se ejecuta en seis sprints secuenciales, con dependencia fuerte entr
 ---
 
 ## Sprint 4 — Integración controlada OpenClaw ↔ Vault + heartbeats
-**Estado:** pendiente
+**Estado:** cerrado (MVP prudente)
 
 ### MUST
 - habilitar carpetas controladas de escritura del agente;
@@ -132,6 +132,18 @@ El proyecto se ejecuta en seis sprints secuenciales, con dependencia fuerte entr
 - heartbeats documentados;
 - evidencia de escritura segura;
 - runbook de promoción con HITL.
+
+### Cierre honesto
+- validado en host:
+  - `heartbeat.write` mínimo;
+  - `draft.write` mínimo con contrato nuevo;
+- documentado, pero no validado como capacidad operativa separada:
+  - reglas HITL de promoción;
+- no ejecutado / fuera de alcance:
+  - `report.write`;
+  - watcher;
+  - timer;
+  - promoción automática.
 
 ---
 
