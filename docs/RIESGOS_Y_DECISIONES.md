@@ -53,7 +53,7 @@ Ya quedó validado en host un baseline mínimo:
 - backup manual del vault y restore de prueba;
 - sin dispositivos remotos ni pairing.
 
-Siguen `pendiente de verificación en host`:
+Siguen pendientes fuera del cierre de Sprint 3:
 
 - pairing y validación real con clientes.
 

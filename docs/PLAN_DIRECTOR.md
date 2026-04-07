@@ -70,7 +70,7 @@ Estado host-side ya validado en Sprint 3:
 - backup manual del vault validado con restore de prueba;
 - sin dispositivos remotos ni pairing.
 
-Siguen `pendiente de verificación en host`:
+Siguen pendientes fuera del cierre de Sprint 3:
 
 - pairing y onboarding real con clientes.
 
@@ -84,7 +84,7 @@ Las zonas iniciales de escritura permitida serán controladas, por ejemplo:
 - `Agent/Heartbeat/`
 
 La promoción a notas núcleo del usuario requerirá HITL.
-La lectura y escritura efectivas fuera de estas zonas quedan `pendiente de verificación en host` hasta definición operativa posterior de esa superficie.
+La lectura y escritura efectivas fuera de estas zonas quedan pendientes de definición operativa posterior para una fase futura.
 La convención canónica de carpetas se detalla en `docs/vault/CONVENCION_DE_CARPETAS_Y_ZONAS.md`.
 
 ## Estado de partida real
