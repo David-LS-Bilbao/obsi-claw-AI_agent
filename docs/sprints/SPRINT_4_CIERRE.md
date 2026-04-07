@@ -96,6 +96,10 @@ Quedó resuelto solo a nivel documental:
 
 La evidencia canónica más útil para el cierre queda en:
 
+- `docs/evidence/VALIDACION_HEARTBEAT_WRITER_SPRINT_4_2026-04-07.md`
+- `docs/sprints/SPRINT_4_HEARTBEAT_INCREMENT_CIERRE.md`
+- `docs/runbooks/OPENCLAW_VAULT_HEARTBEATS_SPRINT_4.md`
+- `docs/runbooks/OPENCLAW_VAULT_ROLLBACK_AGENT_ZONE_SPRINT_4.md`
 - `docs/evidence/VALIDACION_DRAFT_WRITER_CONTRATO_NUEVO_SPRINT_4_2026-04-07.md`
 - `docs/sprints/SPRINT_4_DRAFT_INCREMENT_CIERRE.md`
 - `docs/runbooks/OPENCLAW_VAULT_HEARTBEAT_WRITER_DEPLOY_SPRINT_4.md`
@@ -103,8 +107,6 @@ La evidencia canónica más útil para el cierre queda en:
 - `docs/runbooks/OPENCLAW_VAULT_DRAFT_WRITER_DEPLOY_SPRINT_4.md`
 - `docs/checklists/SPRINT_4_DRAFT_WRITER_VALIDACION.md`
 - `docs/architecture/ADR-003-INTEGRACION-CONTROLADA-OPENCLAW-VAULT.md`
-
-La evidencia host-side canónica específica ya existente para `heartbeat.write` no se reescribe en este cierre; este documento la toma como validación previa confirmada.
 
 ## Qué sigue pendiente de verificación en host
 

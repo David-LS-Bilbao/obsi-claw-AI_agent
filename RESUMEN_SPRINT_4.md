@@ -39,6 +39,8 @@ El cierre debe leerse con alcance limitado:
 
 Tomar como base:
 
+- `docs/evidence/VALIDACION_HEARTBEAT_WRITER_SPRINT_4_2026-04-07.md`
+- `docs/sprints/SPRINT_4_HEARTBEAT_INCREMENT_CIERRE.md`
 - `docs/sprints/SPRINT_4_CIERRE.md`
 - `docs/sprints/SPRINT_4_DRAFT_INCREMENT_CIERRE.md`
 - `docs/evidence/VALIDACION_DRAFT_WRITER_CONTRATO_NUEVO_SPRINT_4_2026-04-07.md`
