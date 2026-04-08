@@ -38,6 +38,7 @@ Regla práctica:
 - Sprint 6 ya dejó backup root-only manual de secretos del boundary y rebuild rehearsal mínimo fuera de producción, ambos validados en host.
 - Sprint 6 ya dejó observabilidad mínima operativa para `devops`, rutina diaria mínima, rutina semanal mínima y validación mínima de Syncthing con Android en ambos sentidos.
 - Sprint 6 ya dejó Telegram con validación mínima suficiente mediante `/status`, sin venderlo como canal perfecto.
+- Sprint 6 ya dejó documentación final de cierre de producto mediante plan de pruebas final del MVP y memoria técnica final.
 - `heartbeat.write` y `draft.write` quedaron validados en su perímetro mínimo.
 - Skill 01 — Auditoría de Drift Host ↔ Documentación quedó validada con evidencia canónica.
 
@@ -56,7 +57,7 @@ Regla práctica:
 
 - el alcance efectivo actual del listener Syncthing `22000`;
 - la vigencia exacta de la afirmación de Sprint 3 sobre pairing, dispositivos remotos y estado efectivo de sincronización;
-- la validación funcional extremo a extremo del canal Telegram;
+- la fiabilidad sostenida del canal Telegram más allá de su validación mínima actual;
 - cualquier afirmación fuerte sobre sincronización productiva con clientes;
 - recuperabilidad integral del boundary y continuidad operativa completa de Sprint 6, más allá del backup diario mínimo del vault, del restore-check manual, del bundle externo mínimo, del backup de secretos y del rebuild rehearsal ya validados.
 
@@ -138,6 +139,7 @@ Regla práctica:
    - criterio sostenido de uso estable.
 4. Cerrar primero tensiones documentales antes de abrir nuevas capacidades.
 5. Abrir cualquier nueva validación en microfases, con contrato, evidencia esperada, límites y criterio HITL explícitos.
+6. Usar `docs/PLAN_DE_PRUEBAS_FINAL_MVP_OBSI_CLAW.md` y `docs/MEMORIA_TECNICA_FINAL_OBSI_CLAW.md` como soporte de cierre y presentación del producto.
 
 ## 10. Prompt de arranque recomendado para un nuevo chat
 

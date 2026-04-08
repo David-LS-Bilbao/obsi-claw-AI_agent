@@ -31,6 +31,8 @@
 - Sprint 6 ya dejó rutina diaria mínima y rutina semanal mínima definidas y validadas en una primera ejecución real.
 - Sprint 6 ya dejó Syncthing validado mínimamente con Android en ambos sentidos; el warning `Unexpected folder "Obsi-Claw"` queda acotado pero ámbar y Windows queda `pendiente de verificación en host`.
 - Sprint 6 ya dejó Telegram con validación mínima suficiente mediante `/status`, con degradación observable histórica pero sin caída total en la prueba.
+- El repo ya dispone de `docs/PLAN_DE_PRUEBAS_FINAL_MVP_OBSI_CLAW.md` como soporte formal de validación final del MVP.
+- El repo ya dispone de `docs/MEMORIA_TECNICA_FINAL_OBSI_CLAW.md` como memoria técnica final del producto en su cierre prudente.
 
 ## Semáforo actual del boundary
 

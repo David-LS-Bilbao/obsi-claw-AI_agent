@@ -2,6 +2,13 @@
 
 Second Brain vivo + operador técnico semiautónomo para DAVLOS VPS, basado en Obsidian, OpenClaw y una operación segura guiada por documentación, auditoría y mínimos privilegios.
 
+Estado de producto actual:
+
+- MVP funcional y entregable en sentido prudente;
+- Sprint 6 cerrado de forma prudente / no maximalista;
+- capacidades mínimas validadas y límites residuales visibles;
+- no debe presentarse como sistema perfecto ni como continuidad integral completa ya cerrada.
+
 ## 1. Qué es este proyecto
 
 **Obsi-Claw AI Agent** es la capa de proyecto donde se diseña, documenta y evoluciona un sistema híbrido con dos funciones integradas:
@@ -44,18 +51,18 @@ Este repositorio **no** debe contener:
 - cambios improvisados sobre producción,
 - evidencia sensible copiada desde el VPS sin filtrado.
 
-## 3. Estado actual de partida
+## 3. Estado actual del proyecto
 
-El proyecto **no parte desde cero**.
+El proyecto **no parte desde cero** y ya no está en fase semilla.
 
 En DAVLOS ya existe una base operativa previa de OpenClaw/OpenClaw boundary documentada en el repo `davlos-control-plane`, con un runtime MVP ya validado en host, red separada y gateway de inferencia interno.
 
-Eso significa que este proyecto debe orientarse a:
+Estado prudente de cierre:
 
-1. **auditar lo ya desplegado**,
-2. **consolidar y endurecer**,
-3. **gobernar el vault canónico e integrar Obsidian de forma segura**,
-4. **convertir el MVP en plataforma mantenible**.
+1. el vault canónico quedó materializado y operable como base de conocimiento;
+2. OpenClaw quedó validado como boundary prudente con observabilidad mínima, continuidad mínima y canal Telegram mínimo;
+3. Syncthing quedó validado mínimamente con Android en ambos sentidos, sin vender sync productivo completo;
+4. el sistema puede defenderse como uso estable en sentido prudente, con ámbar acotados y no bloqueantes.
 
 ## Decisión de arquitectura vigente
 
@@ -77,21 +84,34 @@ Validación host-side reciente:
 - el vault quedó materializado con ownership `devops:obsidian`;
 - `syncthing@syncthing.service` ya existe y está activo;
 - la GUI quedó ligada a `127.0.0.1:8384` con autenticación local;
-- el listener TCP de Syncthing quedó en `127.0.0.1:22000`;
 - `vault-main` ya quedó registrada como carpeta local en Syncthing;
-- no hay dispositivos remotos, no hay pairing y no hay listeners públicos de Syncthing;
 - existe `.stignore` mínimo conservador;
 - existe backup manual del vault en `/opt/backups/obsidian` con restore de prueba en ruta temporal;
+- Sprint 6 añadió backup diario mínimo automatizado del vault;
+- Sprint 6 añadió restore-check manual no destructivo del vault;
+- Sprint 6 validó Syncthing con Android en ambos sentidos de forma mínima y prudente;
+- Telegram quedó validado mínimamente mediante `/status`;
 - OpenClaw sigue separado del vault y de Syncthing.
 
 La evidencia canónica de este estado quedó registrada en `docs/evidence/VALIDACION_HOST_VAULT_SYNCTHING_SPRINT_3_2026-04-05.md`.
 
-Esto **no** significa que ya exista sincronización productiva:
+Esto **no** significa que ya exista sincronización productiva completa:
 
-- no hay pairing con clientes;
-- no hay onboarding validado de clientes de escritorio o Android;
-- no hay exposición pública de la GUI;
-- no hay integración OpenClaw ↔ vault.
+- Windows sigue `pendiente de verificación en host`;
+- el warning `Unexpected folder "Obsi-Claw"` sigue en ámbar acotado;
+- `.obsidian/workspace.json` sigue tratándose como ruido benigno probable;
+- no hay cierre de sincronización productiva completa entre clientes;
+- no hay integración OpenClaw ↔ vault fuera del perímetro mínimo ya validado.
+
+## 3.1 Documentos finales recomendados
+
+Para presentar o defender el estado final del proyecto, la lectura mínima recomendada es:
+
+- [RESUMEN.md](RESUMEN.md)
+- [ESTADO_GLOBAL.md](docs/ESTADO_GLOBAL.md)
+- [SPRINT_6_CIERRE.md](docs/sprints/SPRINT_6_CIERRE.md)
+- [PLAN_DE_PRUEBAS_FINAL_MVP_OBSI_CLAW.md](docs/PLAN_DE_PRUEBAS_FINAL_MVP_OBSI_CLAW.md)
+- [MEMORIA_TECNICA_FINAL_OBSI_CLAW.md](docs/MEMORIA_TECNICA_FINAL_OBSI_CLAW.md)
 
 ## 4. Visión del sistema
 
@@ -200,6 +220,12 @@ Objetivo:
 - backups,
 - recuperación,
 - límites y deuda técnica.
+
+Estado de cierre:
+
+- cerrado de forma prudente / no maximalista;
+- suficiente para presentar Obsi-Claw como MVP funcional y entregable en sentido prudente;
+- sin vender estabilidad perfecta, sync completo ni reconstrucción exacta completa del boundary.
 
 ## 7. Estructura recomendada del repositorio
 
