@@ -97,8 +97,17 @@ La feature se considerará bien encaminada cuando existan:
 
 ## Siguiente paso lógico
 
-A partir de este documento, preparar:
+La base mínima de la feature ya existe:
 
-1. un `AGENTS.md` específico para esta feature;
-2. un documento de sprint o backlog mínimo;
-3. prompts de implementación para Codex CLI.
+- `AGENTS.md`
+- `SPRINT_00_BACKLOG.md`
+- `PROMPTS_CODEX.md`
+
+El siguiente paso lógico real es cerrar el **Bloque 1 — alineación del baseline y precedencia documental** con ajustes pequeños, repo-only y prudentes sobre documentación viva.
+
+Una vez cerrado ese bloque, la secuencia continúa con:
+
+1. Bloque 2 — definición de dominios de optimización;
+2. Bloque 3 — mapa repo-only vs host-side;
+3. Bloque 4 — checklist mínima de preparación operativa futura;
+4. Bloque 5 — mantenimiento del pack de prompts Codex por bloque.
