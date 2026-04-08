@@ -63,12 +63,14 @@ Estado host-side ya validado en Sprint 3:
 - usuario de sistema `syncthing`;
 - config bajo `/var/lib/syncthing`;
 - GUI en `127.0.0.1:8384` con auth local;
-- listener TCP en `127.0.0.1:22000`;
-- sin listeners públicos de Syncthing;
-- `vault-main` registrada como carpeta local;
+- baseline Sprint 3 documentada con listener TCP en `127.0.0.1:22000`;
+- Sprint 5 abrió una tensión documental por observación de `10.90.0.1:22000` sobre `wg0`;
+- el alcance efectivo actual del listener `22000` queda `pendiente de verificación en host`;
+- no debe asumirse exposición pública de Syncthing sin verificación adicional en host;
+- `vault-main` documentada en Sprint 3 como carpeta local;
 - `.stignore` mínimo conservador materializado;
 - backup manual del vault validado con restore de prueba;
-- sin dispositivos remotos ni pairing.
+- baseline Sprint 3 documentada sin dispositivos remotos ni pairing; la vigencia exacta de esa afirmación queda `pendiente de verificación en host`.
 
 Siguen pendientes fuera del cierre de Sprint 3:
 
@@ -95,7 +97,7 @@ No partimos desde cero:
 - hay baseline real confirmada;
 - helper readonly y broker core están validados;
 - `egress/allowlist` ya queda cerrado técnicamente en Sprint 2;
-- Telegram queda en ámbar;
+- Telegram queda con validación mínima suficiente en Sprint 6, pero no como canal plenamente fiable;
 - Obsidian sigue todavía en modo diseño prudente.
 
 ## Roadmap director
@@ -155,6 +157,8 @@ Fuera de alcance por defecto:
 - integración operativa OpenClaw ↔ Vault.
 
 ### Sprint 4 — Integración controlada OpenClaw ↔ Vault + heartbeats
+**Estado:** cerrado (MVP prudente)
+
 Objetivo:
 - habilitar zonas controladas de escritura del agente;
 - activar primeros heartbeats útiles;
@@ -162,19 +166,36 @@ Objetivo:
 - introducir promoción con HITL.
 
 ### Sprint 5 — Operador técnico semiautónomo
+**Estado:** cerrado de forma prudente
+
 Objetivo:
 - skills internas del proyecto;
 - prompts operativos;
 - automatizaciones útiles;
 - salidas valiosas para Obsidian.
 
+Resultado prudente:
+- Skill 01 validada con evidencia canónica;
+- segunda tarea real segura ejecutada mediante `draft.write`;
+- tensión documental de Syncthing `22000` aclarada de forma mínima;
+- Telegram materializado y usable con degradación observable, pero no validado para cierre.
+
 ### Sprint 6 — Estabilización y operación continua
+**Estado:** cerrado de forma prudente / no maximalista
+
 Objetivo:
 - observabilidad;
 - backups y recuperación;
 - deuda técnica;
 - documentación final;
 - continuidad entre chats y sprints.
+
+Resultado prudente:
+- observabilidad mínima operativa útil;
+- continuidad mínima del vault y del boundary validada en host;
+- Syncthing validado mínimamente con Android en ambos sentidos;
+- Telegram validado mínimamente para uso operativo prudente;
+- uso estable del sistema alcanzado en sentido prudente, no maximalista.
 
 ## Reglas de ejecución
 
@@ -192,3 +213,8 @@ El proyecto avanzará correctamente si logra:
 - sincronización segura con dispositivos;
 - OpenClaw útil pero contenido;
 - trazabilidad documental suficiente para continuidad.
+
+## Criterio prudente de uso estable del sistema
+
+En este proyecto, `uso estable del sistema` significa que las capacidades mínimas validadas permiten uso sostenido con ámbar conocido, acotado y no bloqueante.
+No significa perfección, ausencia total de warnings ni reconstrucción reproducible completa del boundary.

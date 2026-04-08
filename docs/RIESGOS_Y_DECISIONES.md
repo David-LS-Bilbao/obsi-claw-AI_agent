@@ -47,11 +47,17 @@ Ya quedó validado en host un baseline mínimo:
 - usuario dedicado `syncthing`;
 - GUI solo en loopback;
 - auth local explícita;
-- listener TCP solo en loopback;
+- baseline Sprint 3 documentada con listener TCP en loopback;
 - `vault-main` registrada como carpeta local;
 - `.stignore` mínimo conservador;
 - backup manual del vault y restore de prueba;
-- sin dispositivos remotos ni pairing.
+- baseline Sprint 3 documentada sin dispositivos remotos ni pairing.
+
+Sprint 5 abrió una tensión documental adicional:
+
+- observación de `10.90.0.1:22000` sobre `wg0`;
+- el alcance efectivo actual de `22000` queda `pendiente de verificación en host`;
+- no debe afirmarse exposición pública sin verificación adicional en host.
 
 Siguen pendientes fuera del cierre de Sprint 3:
 
@@ -85,6 +91,16 @@ Su baseline en este repositorio es:
 - definición de ownership, conflictos, exclusiones y backups;
 - documentación de flujos futuros por plataforma;
 - congelación documental del estado host-side realmente validado.
+
+### DEC-009 — El uso estable del sistema se declara solo en sentido prudente
+**Estado:** aceptada
+
+`Uso estable del sistema` no significa perfección ni ausencia total de warnings.
+Significa que las capacidades mínimas validadas permiten uso sostenido con ámbar conocido, acotado y no bloqueante, sin vender:
+
+- reconstrucción reproducible completa del boundary;
+- sincronización productiva total de Syncthing;
+- un canal Telegram plenamente fiable.
 
 ## Riesgos del proyecto
 
@@ -138,10 +154,62 @@ Mitigación:
 Mitigación:
 - precedencia documental clara;
 - actualización de docs vivas al cierre de cada sprint.
+- reconciliación continua entre repo de producto y repo operativo cuando aparezca drift observable.
+
+### RISK-006 — Alcance documental del listener Syncthing `22000`
+**Estado:** ámbar
+**Tratamiento:** Sprint 6 / continuo
+
+Riesgo:
+- mantener `local-only` como formulación global cuando el scope efectivo de `22000` ya quedó tensionado documentalmente.
+
+Mitigación:
+- separar GUI/API en loopback del listener de sincronización;
+- usar redacción prudente;
+- mantener el alcance efectivo de `22000` como `pendiente de verificación en host`.
+
+### RISK-007 — Telegram con validación mínima pero degradación observable
+**Estado:** ámbar
+**Tratamiento:** Sprint 6 / continuo
+
+Riesgo:
+- confundir validación mínima de `/status` con canal plenamente fiable.
+
+Mitigación:
+- tratar Telegram como validado mínimamente para uso operativo prudente;
+- mantener en ámbar la degradación observable de polling;
+- reservar como `pendiente de verificación en host` cualquier afirmación de fiabilidad sostenida o ausencia de degradación.
+
+### RISK-008 — Inflar Sprint 5 por encima de la evidencia
+**Estado:** ámbar
+**Tratamiento:** Sprint 6 / continuo
+
+Riesgo:
+- presentar Sprint 5 como cierre amplio de skills, Telegram o autonomía cuando la evidencia validada es más acotada.
+
+Mitigación:
+- sostener que la Skill 01 es la capacidad interna claramente validada;
+- tratar `draft.write` reutilizado como segunda tarea real segura, no como arrastre a nuevas capacidades;
+- conservar el cierre del sprint como prudente y no maximalista.
+
+### RISK-009 — Confundir backup externo mínimo del boundary con reconstrucción completa
+**Estado:** ámbar
+**Tratamiento:** Sprint 6 / continuo
+
+Riesgo:
+- asumir que la continuidad del boundary ya quedó cerrada por existir bundle externo mínimo;
+- ignorar que, aun tras el backup de secretos y el rebuild rehearsal mínimo, sigue sin demostrarse una reconstrucción reproducible completa.
+
+Mitigación:
+- documentar que la continuidad ya no depende solo del runtime vivo;
+- mantener la clasificación como recuperabilidad parcial;
+- conservar como `pendiente de verificación en host` cualquier afirmación de reconstrucción exacta o continuidad integral cerrada.
 
 ## No decisiones todavía cerradas
 
 - si conviene una carpeta hermana `vault-agent-zone` o solo zonas controladas dentro del vault principal;
 - la superficie real de lectura que se autorizaría al agente fuera de zonas controladas;
 - la retención y automatización posteriores del backup del vault;
+- el alcance efectivo actual del listener Syncthing `22000`;
+- la fiabilidad sostenida del canal Telegram más allá de su validación mínima;
 - el pairing y la validación real con clientes.

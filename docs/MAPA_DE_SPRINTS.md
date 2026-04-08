@@ -148,7 +148,7 @@ El proyecto se ejecuta en seis sprints secuenciales, con dependencia fuerte entr
 ---
 
 ## Sprint 5 — Operador técnico semiautónomo
-**Estado:** pendiente
+**Estado:** cerrado de forma prudente / no maximalista
 
 ### MUST
 - definir skills internas;
@@ -165,10 +165,24 @@ El proyecto se ejecuta en seis sprints secuenciales, con dependencia fuerte entr
 - documentación de skills;
 - validaciones funcionales.
 
+### Cierre honesto
+- validado con evidencia canónica:
+  - Skill 01 — Auditoría de Drift Host ↔ Documentación;
+- ejecutado como segunda tarea real segura:
+  - reutilización de `draft.write` con draft nuevo en `pending_human_review`;
+- aclarado documentalmente:
+  - tensión sobre la redacción de Syncthing `22000`;
+- usable pero no validado para cierre:
+  - canal Telegram;
+- fuera de cierre maximalista:
+  - skills adicionales no validadas;
+  - validación funcional completa de Telegram;
+  - cualquier arrastre de `draft.write` a nuevas capacidades.
+
 ---
 
 ## Sprint 6 — Estabilización, observabilidad y continuidad
-**Estado:** pendiente
+**Estado:** cerrado de forma prudente / no maximalista
 
 ### MUST
 - revisar deuda técnica;
@@ -177,6 +191,22 @@ El proyecto se ejecuta en seis sprints secuenciales, con dependencia fuerte entr
 - dejar RESUMEN maestro y continuidad entre chats.
 
 ### Entregables
-- operación estable;
+- operación estable en sentido prudente;
 - documentación suficiente;
 - plataforma utilizable a medio plazo.
+
+### Resultado observado
+- observabilidad mínima operativa reforzada para `devops` mediante helper readonly acotado;
+- backup diario mínimo del vault validado;
+- restore-check manual no destructivo del vault validado;
+- bundle externo mínimo del boundary validado;
+- backup root-only de secretos validado;
+- rebuild rehearsal mínimo del boundary validado fuera de producción;
+- rutina diaria mínima validada;
+- rutina semanal mínima validada;
+- Syncthing validado mínimamente con Android en ambos sentidos, sin vender sync productivo completo;
+- Telegram validado mínimamente mediante `/status`, con degradación observable histórica;
+- warning `Unexpected folder "Obsi-Claw"` aceptado como ámbar acotado;
+- `.obsidian/workspace.json` aceptado como benigno probable;
+- Windows sigue `pendiente de verificación en host`;
+- la continuidad integral exacta del boundary no queda cerrada en este sprint.
