@@ -55,7 +55,10 @@ Este repositorio **no** debe contener:
 
 El proyecto **no parte desde cero** y ya no está en fase semilla.
 
-En DAVLOS ya existe una base operativa previa de OpenClaw/OpenClaw boundary documentada en el repo `davlos-control-plane`, con un runtime MVP ya validado en host, red separada y gateway de inferencia interno.
+En DAVLOS ya existe una base operativa previa de OpenClaw/OpenClaw boundary documentada en el repo `davlos-control-plane`, tratable hoy como **baseline prudente validado en host**, con red separada, gateway de inferencia interno y evidencia operativa suficiente para trabajar ya en optimización y no solo en descubrimiento.
+
+La **fuente de verdad operativa** de ese boundary sigue siendo `davlos-control-plane`.
+Este repositorio consume esa baseline como punto de partida para producto, arquitectura, prompts y roadmap, pero no sustituye el estado operativo del VPS.
 
 Estado prudente de cierre:
 
@@ -224,8 +227,13 @@ Objetivo:
 Estado de cierre:
 
 - cerrado de forma prudente / no maximalista;
-- suficiente para presentar Obsi-Claw como MVP funcional y entregable en sentido prudente;
+- suficiente para tratar OpenClaw como baseline prudente validado y a Obsi-Claw como sistema utilizable en sentido prudente;
 - sin vender estabilidad perfecta, sync completo ni reconstrucción exacta completa del boundary.
+
+Siguiente tramo lógico:
+
+- `docs/BASELINE_OPENCLAW_VALIDADO_Y_SIGUIENTE_TRAMO.md`
+- `docs/sprints/SPRINT_SIGUIENTE_OPTIMIZACION_OPENCLAW.md`
 
 ## 7. Estructura recomendada del repositorio
 

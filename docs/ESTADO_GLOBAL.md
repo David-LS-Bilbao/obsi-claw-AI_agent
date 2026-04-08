@@ -13,6 +13,8 @@
 - La auditoría host-side readonly confirma broker, Telegram y helper readonly materializados por evidencia directa de host, con distintos niveles de confianza funcional.
 - La validación funcional controlada del helper `davlos-openclaw-readonly` confirma interfaz usable, subcomandos readonly operativos y cableado funcional por la vía `devops -> sudo` al menos para `runtime_summary`.
 - La prueba funcional readonly del broker core confirma ejecución real de `action.health.general.v1` fuera de Telegram, con auditoría before/after coherente y sin cambios de estado efectivo.
+- La validación readonly posterior del repo operativo permite tratar hoy el boundary OpenClaw como **baseline prudente validado en host**.
+- La fuente de verdad operativa de esa baseline sigue siendo `davlos-control-plane`; este repo conserva la fuente de verdad de producto, arquitectura y siguientes tramos.
 - Sprint 2 cerró técnicamente `egress/allowlist` con evidencia suficiente: hoy existe `DOCKER-USER -> OPENCLAW-EGRESS`, allow efectivo a `172.22.0.1:11440/tcp`, `DROP` final y bloqueo funcional probado de `1.1.1.1:443/tcp`.
 - La validación final consolidada del cierre quedó registrada en `docs/evidence/VALIDACION_EGRESS_ALLOWLIST_SPRINT_2_2026-04-05.md`.
 - Sprint 3 ya añadió validación host-side mínima del plano vault/Syncthing, registrada en `docs/evidence/VALIDACION_HOST_VAULT_SYNCTHING_SPRINT_3_2026-04-05.md`.
@@ -46,19 +48,20 @@
 - `egress/allowlist` cerrado técnicamente en Sprint 2.
 - helper readonly validado en modo readonly.
 - broker restringido validado en su core de ejecución readonly.
+- baseline prudente del boundary documentado y validado en el repo operativo.
 
 ### Ámbar
 
 - Telegram persistente activo pero con warnings de polling;
 - Telegram validado mínimamente para uso operativo prudente, con warnings históricos de polling y sin promesa de fiabilidad plena;
 - contrato final de secretos y semántica final de health/readiness.
+- coherencia histórica entre documentos de ambos repos: ya sin contradicción crítica en el baseline vivo, pero con material antiguo que debe leerse como contexto temporal.
 - plano vault/Syncthing materializado y validado mínimamente con Android en ambos sentidos, pero con warning `Obsi-Claw` en ámbar y sin cierre de sync productivo completo.
 - continuidad del vault fortalecida por backup diario mínimo y restore-check manual validados; el uso estable del sistema puede sostenerse en sentido prudente.
 - continuidad del boundary fortalecida por bundle externo mínimo, backup de secretos y rebuild rehearsal mínimo ya validados; la reconstrucción exacta sigue abierta.
 
 ### Rojo
 
-- coherencia documental global entre fuentes de `control-plane`;
 - cualquier supuesto de pairing, sincronización productiva o integración OpenClaw ↔ Vault más allá del plano administrativo local ya validado.
 
 ## Qué está pendiente de validar en host
@@ -74,6 +77,7 @@
 - recuperabilidad integral del boundary más allá del bundle externo, el backup de secretos y el rebuild rehearsal mínimo;
 - pairing y validación adicional de clientes, especialmente Windows;
 - postura final por plataforma, sobre todo iOS.
+- sincronización host-side del helper instalado con la mejora menor del repo operativo sobre `broker_audit_recent`.
 
 ## Qué no debe asumirse aún
 
@@ -85,14 +89,15 @@
 - Que el agente tenga ya permiso de escritura sobre una vault Obsidian productiva.
 - Que exista una política resuelta para sync bidireccional o resolución de conflictos.
 - Que Syncthing siga exactamente sin carpeta activa del vault o clientes remotos emparejados.
+- Que el helper instalado en host coincida byte a byte con la última revisión del repo operativo.
 
 ## Divergencias documentales abiertas
 
-- `davlos-control-plane` presenta un checkpoint operativo avanzado.
-- `obsi-claw-AI_agent` todavía está en fase semilla y acaba de recibir su baseline documental mínimo.
-- `control-plane/README.md` queda alineado con la evidencia reciente de host.
-- `control-plane/docs/AGENTS.md` conserva afirmaciones históricas desalineadas sobre broker y Telegram.
+- `davlos-control-plane` ya documenta el boundary OpenClaw como baseline prudente validado y sigue siendo la referencia operativa canónica.
+- `obsi-claw-AI_agent` debe consumir esa baseline como punto de partida de producto y no como sustituto del estado real del VPS.
+- persiste un drift menor repo ↔ host en el helper readonly del repo operativo; hoy no cambia la superficie expuesta ni bloquea el baseline prudente.
 - Sprint 5 abrió tensión documental sobre el scope actual del listener Syncthing `22000`.
+- Los documentos históricos de sprint deben leerse con contexto temporal y no como estado vivo permanente.
 - Toda futura implementación debe contrastarse contra el estado real del VPS.
 
 ## Nota operativa
@@ -109,3 +114,12 @@ Significa que las capacidades mínimas validadas permiten uso sostenido con ámb
 - continuidad mínima del boundary;
 - Syncthing validado mínimamente con cliente real;
 - Telegram validado mínimamente para uso operativo prudente.
+
+## Siguiente tramo lógico
+
+El siguiente tramo ya no parte de un boundary “incierto”, sino de una **baseline prudente validada** en `davlos-control-plane`.
+
+La preparación documental mínima de ese siguiente tramo queda aquí:
+
+- `docs/BASELINE_OPENCLAW_VALIDADO_Y_SIGUIENTE_TRAMO.md`
+- `docs/sprints/SPRINT_SIGUIENTE_OPTIMIZACION_OPENCLAW.md`
