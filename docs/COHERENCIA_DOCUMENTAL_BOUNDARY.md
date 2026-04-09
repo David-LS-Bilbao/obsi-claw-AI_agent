@@ -1,49 +1,48 @@
 # COHERENCIA_DOCUMENTAL_BOUNDARY.md
 
-## Resumen corto
+## Propósito
 
-La validación readonly ya cerrada en `davlos-control-plane` permite tratar hoy el boundary OpenClaw como **baseline prudente validado**. La contradicción crítica que existía entre documentos vivos de ese repo quedó cerrada; lo que queda es sobre todo precedencia documental, lectura temporal de históricos y consumo correcto de la fuente de verdad operativa desde este repo de producto.
+Este documento fija cómo debe leerse la documentación del boundary OpenClaw desde `obsi-claw-AI_agent` tras la validación readonly ya cerrada en `davlos-control-plane`.
 
-## Claims documentales confirmados por host
+La línea validada del proyecto ya permite tratar OpenClaw como **baseline prudente validado**.
+Lo que queda abierto no es una negación viva de esa baseline, sino el riesgo normal de divergencia menor entre ramas, checkpoints e históricos del repo operativo, además de algunos límites residuales host-side.
 
-- runtime host-side en `/opt/automation/agents/openclaw`;
-- ruta de secretos en `/etc/davlos/secrets/openclaw`;
-- contenedor `openclaw-gateway` activo y sano;
-- red dedicada `agents_net`;
-- bind local exclusivo en `127.0.0.1:18789`;
-- `inference-gateway.service` activa y reachability confirmada en `172.22.0.1:11440`;
-- materialización de broker restringido en policy, auditoría y state;
-- materialización de Telegram persistente como servicio `systemd`;
-- helper readonly instalado y cableado en host.
+## Precedencia documental vigente
 
-## Claims desactualizados o incompletos
+Cuando haya conflicto, diferente granularidad o cronologías que no encajen del todo, debe aplicarse este orden:
 
-- La idea de que OpenClaw sigue solo en un “MVP incierto” ya no es suficiente: el repo operativo lo trata como baseline prudente validado.
-- La expresión “health correcto en `127.0.0.1:18789`” es ambigua si no se aclara que el check real observado es TCP, no un `/healthz` HTTP del gateway.
-- Los documentos que dejan `egress/allowlist` como gap abierto deben leerse como material histórico previo al cierre de Sprint 2.
-- Los documentos históricos de sprint que describen una desalineación fuerte con `control-plane/docs/AGENTS.md` ya no representan el estado vivo actual.
+1. evidencia verificable;
+2. checkpoint operativo vigente de `davlos-control-plane`;
+3. documentación operativa no contradicha por evidencia más reciente;
+4. `obsi-claw-AI_agent` como capa de producto;
+5. propuestas futuras.
 
-## Decisión recomendada de precedencia documental
+## Qué puede afirmarse hoy con prudencia
 
-1. Evidencia de host y artefactos observados.
-2. `davlos-control-plane/README.md`, `docs/AGENTS.md` y evidencias recientes cuando coinciden con host.
-3. Documentos de `davlos-control-plane` no contradichos por evidencia más reciente.
-4. `obsi-claw-AI_agent` como capa de producto, roadmap y consolidación documental del proyecto.
+- OpenClaw ya no debe tratarse como un boundary incierto o meramente hipotético.
+- El boundary puede tratarse como baseline prudente validado en la línea operativa ya contrastada.
+- `davlos-control-plane` sigue siendo la referencia operativa canónica.
+- `obsi-claw-AI_agent` sigue siendo la capa de producto, diseño, roadmap y preparación documental.
+- Telegram, helper readonly, modelo root-only del `.lock` y ausencia de writers no root compatibles deben leerse como riesgos residuales o pendientes host-side, no como negación del baseline.
 
-## Cambios recomendados en davlos-control-plane
+## Cómo leer los históricos
 
-En esta fase ya no hay un cambio crítico pendiente de coherencia inter-repo.
-Lo que queda es un ajuste menor, no bloqueante del baseline:
+- Los cierres de sprint, borradores y documentos antiguos deben leerse con contexto temporal.
+- Un documento histórico puede describir un estado real de su checkpoint sin ser ya el estado vivo actual.
+- Si dos checkpoints del repo operativo no dicen exactamente lo mismo, no debe sobredramatizarse como “contradicción crítica” salvo que exista evidencia nueva que invalide la línea validada.
+- Cuando aparezca drift, debe formularse preferentemente como posible divergencia entre ramas, checkpoints o históricos, no como negación automática de la baseline prudente validada.
 
-- sincronizar en host el helper instalado con la mejora menor del repo operativo sobre el tail del audit log;
-- mantener el modelo root-only del `state/lock` mientras no aparezcan writers no root;
-- seguir tratando `operational_logs_recent` como allowlist cerrada, no como acceso general a `journald`.
+## Riesgos residuales no bloqueantes
 
-## Cambios recomendados en obsi-claw-AI_agent
+- fiabilidad sostenida de Telegram más allá de la validación mínima actual;
+- drift menor repo ↔ host en el helper operativo del repo de control-plane;
+- necesidad de reevaluar el modelo del `.lock` si aparecieran writers no root;
+- divergencia menor entre checkpoints o ramas del repo operativo sobre detalles no nucleares.
 
-- tomar la auditoría host-side como baseline operativo de Sprint 1;
-- reflejar el cierre de Sprint 2 en `ESTADO_GLOBAL.md`, `ESTADO_SEMAFORICO.md` y documentos de relevo;
-- reflejar que el boundary OpenClaw ya parte de una baseline prudente validada y no de un MVP incierto;
-- usar `docs/evidence/` como registro canónico de verificaciones de host;
-- mantener una postura prudente para Obsidian: diseño sí, sync/automatización no todavía;
-- seguir remitiendo la fuente de verdad operativa a `davlos-control-plane`.
+## Regla práctica para este repo
+
+- no duplicar aquí detalle operativo sensible ni checkpoints enteros del host;
+- usar este repo para producto, contexto, prompts y hoja de ruta;
+- remitir la verdad operativa a `davlos-control-plane`;
+- etiquetar toda incertidumbre relevante como `pendiente de verificación en host`;
+- evitar reabrir auditorías ya cerradas salvo que exista evidencia nueva que obligue a hacerlo.

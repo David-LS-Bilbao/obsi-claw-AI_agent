@@ -51,6 +51,16 @@ Este repositorio **no** debe contener:
 - cambios improvisados sobre producción,
 - evidencia sensible copiada desde el VPS sin filtrado.
 
+### Precedencia documental vigente
+
+Cuando haya conflicto o diferencia de granularidad entre documentos, debe aplicarse este orden:
+
+1. evidencia verificable;
+2. checkpoint operativo vigente de `davlos-control-plane`;
+3. documentación operativa no contradicha por evidencia más reciente;
+4. `obsi-claw-AI_agent` como capa de producto;
+5. propuestas futuras.
+
 ## 3. Estado actual del proyecto
 
 El proyecto **no parte desde cero** y ya no está en fase semilla.
@@ -77,26 +87,20 @@ Como decisión de producto y diseño objetivo, la arquitectura documental vigent
 - OpenClaw separado del runtime del vault;
 - escritura del agente solo en zonas controladas.
 
-Ruta objetivo recomendada para el vault:
-
-- `/opt/data/obsidian/vault-main`
-
 Validación host-side reciente:
 
-- `/opt/data/obsidian/vault-main` ya existe en DAVLOS;
-- el vault quedó materializado con ownership `devops:obsidian`;
-- `syncthing@syncthing.service` ya existe y está activo;
-- la GUI quedó ligada a `127.0.0.1:8384` con autenticación local;
-- `vault-main` ya quedó registrada como carpeta local en Syncthing;
-- existe `.stignore` mínimo conservador;
-- existe backup manual del vault en `/opt/backups/obsidian` con restore de prueba en ruta temporal;
-- Sprint 6 añadió backup diario mínimo automatizado del vault;
-- Sprint 6 añadió restore-check manual no destructivo del vault;
-- Sprint 6 validó Syncthing con Android en ambos sentidos de forma mínima y prudente;
-- Telegram quedó validado mínimamente mediante `/status`;
-- OpenClaw sigue separado del vault y de Syncthing.
+- la baseline prudente validada del boundary OpenClaw ya quedó registrada en `davlos-control-plane`;
+- Sprint 3 y Sprint 6 permiten tratar el plano vault/Syncthing y la continuidad mínima como línea validada de trabajo, no como cierre total del sistema;
+- Telegram sigue validado solo de forma mínima y prudente, no como canal plenamente fiable;
+- helper readonly, modelo root-only del `.lock` y ausencia de writers no root compatibles siguen tratándose como límites o riesgos residuales, no como bloqueos totales;
+- el detalle operativo vigente debe leerse desde `davlos-control-plane` y desde la evidencia enlazada en este repo, no desde resúmenes de producto.
 
-La evidencia canónica de este estado quedó registrada en `docs/evidence/VALIDACION_HOST_VAULT_SYNCTHING_SPRINT_3_2026-04-05.md`.
+La evidencia canónica enlazada desde este repo incluye, entre otras:
+
+- `docs/evidence/VALIDACION_HOST_VAULT_SYNCTHING_SPRINT_3_2026-04-05.md`
+- `docs/evidence/VALIDACION_EGRESS_ALLOWLIST_SPRINT_2_2026-04-05.md`
+- `docs/evidence/VALIDACION_HEARTBEAT_WRITER_SPRINT_4_2026-04-07.md`
+- `docs/evidence/VALIDACION_DRAFT_WRITER_CONTRATO_NUEVO_SPRINT_4_2026-04-07.md`
 
 Esto **no** significa que ya exista sincronización productiva completa:
 
@@ -233,7 +237,8 @@ Estado de cierre:
 Siguiente tramo lógico:
 
 - `docs/BASELINE_OPENCLAW_VALIDADO_Y_SIGUIENTE_TRAMO.md`
-- `docs/sprints/SPRINT_SIGUIENTE_OPTIMIZACION_OPENCLAW.md`
+- `docs/features/obsi-claw-optimization/OBJETIVOS_FINALES.md`
+- `docs/features/obsi-claw-optimization/SPRINT_00_BACKLOG.md`
 
 ## 7. Estructura recomendada del repositorio
 

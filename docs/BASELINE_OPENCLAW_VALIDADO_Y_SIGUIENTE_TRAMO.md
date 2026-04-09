@@ -44,6 +44,7 @@ No debe afirmarse todavía que exista:
 - `operational_logs_recent` expone metadata operativa lateral limitada; no se observaron secretos obvios, pero no debe tratarse como salida pública.
 - El modelo del `.lock` es correcto para el estado root-only actual; si apareciera un writer no root, habría que reevaluarlo.
 - Persiste un drift menor repo ↔ host en el helper operativo: mejora del tail del audit log y comentarios, sin cambio de superficie ni de allowlist.
+- Puede existir divergencia menor entre ramas, checkpoints o históricos de `davlos-control-plane`; eso obliga a leer con precedencia documental, pero no niega la baseline prudente validada.
 
 ## Por qué esto cambia el punto de partida del proyecto
 
@@ -74,13 +75,24 @@ El cambio real es este:
 
 Este repo no debe duplicar secretos, dumps ni detalles sensibles del host.
 
+## Precedencia documental aplicable
+
+Cuando haya diferencias entre resúmenes, históricos y checkpoints, debe aplicarse este orden:
+
+1. evidencia verificable;
+2. checkpoint operativo vigente de `davlos-control-plane`;
+3. documentación operativa no contradicha por evidencia más reciente;
+4. `obsi-claw-AI_agent` como capa de producto;
+5. propuestas futuras.
+
 ## Siguiente tramo lógico
 
-El siguiente tramo razonable ya no es “descubrir qué hay”, sino optimizar de forma pequeña, segura y reversible la baseline OpenClaw ya validada.
+El siguiente tramo razonable ya no es “descubrir qué hay” ni reabrir auditorías ya cerradas, sino alinear la documentación y ordenar la optimización prudente sobre la baseline OpenClaw ya validada.
 
-Ese siguiente tramo queda preparado en:
+Ese siguiente tramo queda ordenado en:
 
-- `docs/sprints/SPRINT_SIGUIENTE_OPTIMIZACION_OPENCLAW.md`
+- `docs/features/obsi-claw-optimization/OBJETIVOS_FINALES.md`
+- `docs/features/obsi-claw-optimization/SPRINT_00_BACKLOG.md`
 
 ## Qué sigue pendiente
 
