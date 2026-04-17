@@ -1,5 +1,39 @@
 # ESTADO_GLOBAL.md
 
+## Actualización 2026-04-17 — Estado real del runtime
+
+**Cambio de arquitectura confirmado:** OpenClaw ya NO es el contenedor Docker `openclaw-gateway`.
+Desde Phase 7 del bot, el runtime es un servicio systemd Python directo en host:
+
+- Servicio: `openclaw-telegram-bot.service`
+- Bot: `/opt/control-plane/scripts/agents/openclaw/restricted_operator/telegram_bot.py`
+- Policy live: `/opt/automation/agents/openclaw/broker/restricted_operator_policy.json`
+- LLM local: `qwen2.5:3b` vía Ollama en `http://127.0.0.1:11440/v1`
+
+**Fases 1-9 completadas** en rama `feat/phase8-vault-crud` (pendiente merge):
+
+| Fase | Capacidad |
+|---|---|
+| 1-3 | Inbox write, draft promote, report promote |
+| 4-6 | Capa conversacional, vault read, higiene UX |
+| 7 | Modo agentico, wake/sleep, confirmaciones |
+| 8 | Vault CRUD E1-E4 (leer, explorar, crear, archivar) |
+| 9 | Sandbox modo libre + E5/E6 (editar, mover) + LLM con contexto vault |
+
+**Conexión con este repo completada (2026-04-17):**
+- `vault_root` en template policy apunta a `/opt/data/obsidian/vault-main` ✓
+- `action.heartbeat.write.v1` implementado — escribe en `Agent/Heartbeat/` con el mismo contrato de frontmatter que `scripts/helpers/openclaw_vault_heartbeat_writer.py` ✓
+- Intent Telegram: `escribe heartbeat` / `heartbeat` / `registra estado` ✓
+- Carpetas del agente respetadas: `Agent/Inbox_Agent/`, `Agent/Drafts_Agent/`, `Agent/Heartbeat/` ✓
+- Pipeline artifacts (`STAGED_INPUT.md`, `REPORT_INPUT.md`) excluidos de listados públicos ✓
+
+**Pendiente en producción:**
+- Actualizar `vault_root` en policy live a `/opt/data/obsidian/vault-main`
+- Habilitar `action.heartbeat.write.v1` en policy live con `enabled: true`
+- Merge del PR `feat/phase8-vault-crud` en GitHub
+
+---
+
 ## Qué está confirmado
 
 - Existe un clon de trabajo del proyecto en `/opt/automation/projects/obsi-claw-AI_agent`.
