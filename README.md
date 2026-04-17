@@ -86,12 +86,11 @@ Validación host-side reciente:
 
 La evidencia canónica de este estado quedó registrada en `docs/evidence/VALIDACION_HOST_VAULT_SYNCTHING_SPRINT_3_2026-04-05.md`.
 
-Esto **no** significa que ya exista sincronización productiva:
+Esto **no** significa que ya exista sincronización productiva con todos los clientes:
 
-- no hay pairing con clientes;
-- no hay onboarding validado de clientes de escritorio o Android;
+- pairing validado en Android (Sprint 3);
 - no hay exposición pública de la GUI;
-- no hay integración OpenClaw ↔ vault.
+- **integración OpenClaw ↔ vault operativa desde Sprint 4/5** (ver Estado operativo más abajo).
 
 ## 4. Visión del sistema
 
@@ -180,11 +179,14 @@ Objetivo:
 - gobernar sincronización prudente sin corrupción.
 
 ## Sprint 4 — Integración controlada OpenClaw ↔ Vault + heartbeats
-Objetivo:
-- habilitar zonas controladas de escritura del agente,
-- activar heartbeats seguros,
-- promover borradores con HITL,
-- validar que el agente no corrompe el vault.
+**Estado:** cerrado y operativo
+
+Objetivo ejecutado:
+- zonas de escritura controladas habilitadas (`Agent/Inbox_Agent/`, `Agent/Drafts_Agent/`, `Agent/Reports_Agent/`, `Agent/Heartbeat/`);
+- heartbeats seguros activos (`action.heartbeat.write.v1`);
+- borradores con HITL operativos (`action.draft.write.v1`, contrato ADR-003);
+- agent sub-zones navegables en modo lectura desde Telegram;
+- vault no corrompido: artefactos pipeline (`STAGED_INPUT.md`, `REPORT_INPUT.md`) excluidos de listados públicos.
 
 ## Sprint 5 — Operador técnico
 Objetivo:
@@ -303,6 +305,27 @@ Documentos clave:
 - [RESUMEN_SPRINT_1.md](RESUMEN_SPRINT_1.md)
 - [RESUMEN_SPRINT_2.md](RESUMEN_SPRINT_2.md)
 
-## 13. Próximo paso recomendado
+## 13. Estado operativo actual (2026-04-17)
 
-Cerrar formalmente Sprint 3 en documentación y checklist, manteniendo fuera de alcance el pairing con clientes, la integración OpenClaw ↔ vault y cualquier apertura de superficie adicional.
+La integración OpenClaw ↔ vault está **operativa en producción**:
+
+| Capacidad | Estado |
+|---|---|
+| Vault canónico en VPS (`/opt/data/obsidian/vault-main`) | Operativo |
+| Syncthing + Android pairing | Operativo |
+| Heartbeat desde Telegram → `Agent/Heartbeat/` | Operativo |
+| Borrador directo desde Telegram → `Agent/Drafts_Agent/` | Operativo (ADR-003) |
+| Inbox write + promote HITL | Operativo |
+| Exploración y lectura del vault desde Telegram | Operativo |
+| Sandbox mode con LLM local (`qwen2.5:3b`) | Operativo |
+| Agent sub-zones navegables (Drafts, Reports, Heartbeat) | Operativo |
+
+Repositorio de implementación: [`davlos-control-plane`](https://github.com/David-LS-Bilbao/davlos-control-plane) — rama `feat/phase8-vault-crud`.
+
+## 14. Próximo paso recomendado
+
+Sprint 6 — Auditoría y estabilización:
+- merge `feat/phase8-vault-crud` → `main` en `davlos-control-plane`,
+- habilitar y validar E2E `action.note.edit.v1` y `action.note.move.v1`,
+- runbooks de backup y recuperación del vault,
+- observabilidad: métricas de uso del bot y del pipeline de borradores.
